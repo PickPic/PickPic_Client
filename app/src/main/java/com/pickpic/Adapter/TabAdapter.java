@@ -8,11 +8,11 @@ import com.pickpic.Fragment.DirectoryTabFragment;
 import com.pickpic.Fragment.TimeTabFragment;
 import com.pickpic.Fragment.TagTabFragment;
 
-public class TabPagerAdapter extends FragmentPagerAdapter {
+public class TabAdapter extends FragmentPagerAdapter {
 
     int tabCount;
 
-    public TabPagerAdapter(FragmentManager fm, int numberOfTabs) {
+    public TabAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
         this.tabCount = numberOfTabs;
     }
@@ -22,14 +22,14 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                DirectoryTabFragment tab1 = new DirectoryTabFragment();
-                return tab1;
+                DirectoryTabFragment directoryTabFragment = new DirectoryTabFragment();
+                return directoryTabFragment;
             case 1:
-                TimeTabFragment tab2 = new TimeTabFragment();
-                return tab2;
+                TimeTabFragment timeTabFragment = new TimeTabFragment();
+                return timeTabFragment;
             case 2:
-                TagTabFragment tab3 = new TagTabFragment();
-                return tab3;
+                TagTabFragment tagTabFragment = new TagTabFragment();
+                return tagTabFragment;
             default:
                 return null;
         }

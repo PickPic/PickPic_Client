@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.design.widget.*;
 import android.support.v4.view.PagerAdapter;
 
-import com.pickpic.Adapter.TabPagerAdapter;
+import com.pickpic.Adapter.TabAdapter;
 import com.pickpic.R;
 
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ViewPager viewPager =
                 (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new TabPagerAdapter
+        final PagerAdapter adapter = new TabAdapter
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
