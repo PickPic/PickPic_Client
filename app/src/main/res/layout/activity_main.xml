@@ -68,6 +68,7 @@
         app:tabGravity="fill"
         android:background="@color/colorToolbar"
         android:elevation="4dp"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
