@@ -3,7 +3,7 @@ package com.pickpic.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.arseneholmes.pickpic.R;
+import com.pickpic.R;
 
 public class RecommendTagListFragment extends AppCompatActivity {
 
