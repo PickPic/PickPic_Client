@@ -1,5 +1,6 @@
 package com.pickpic.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v4.view.ViewPager;
@@ -8,13 +9,17 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.*;
 import android.support.v4.view.PagerAdapter;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.pickpic.Adapter.TabPagerAdapter;
 import com.pickpic.R;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    ImageButton searchButton;
+    ImageButton menuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +28,14 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        searchButton = (ImageButton) findViewById(R.id.vert_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,TestActivity.class);
+                startActivity(intent);
+            }
+        });
         TabLayout tabLayout =
                 (TabLayout) findViewById(R.id.tab_layout);
 

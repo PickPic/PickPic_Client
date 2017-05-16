@@ -28,7 +28,7 @@ public class TagDBManager {
     public final static int DIRECTORY_TAG = 2;
     // DB관련 객체 선언
     private OpenHelper opener; // DB opener
-    private SQLiteDatabase db; // DB controller
+    private SQLiteDatabase db; // DB controllers
 
     // 부가적인 객체들
     private Context context;
@@ -118,8 +118,8 @@ public class TagDBManager {
 
         Log.v("sssss","ok");
     }
-    public void removeImage(Uri uri){
-        db.execSQL("DELETE FROM IMAGES WHERE uri = " + uri);
+    public void removeImage(String path){
+        db.execSQL("DELETE FROM IMAGES WHERE uri = " + path);
     }
     public void removeTag(Uri uri, String tag){
         db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE uri = " + uri +"AND tagValue = "+"tag");
