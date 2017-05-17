@@ -81,15 +81,6 @@ public class TagDBManager {
         a.close();
         return results;
     }
-    public void getTestTag(String path){
-
-        //String sql = "SELECT * FROM IMAGES WHERE path = \""+ path+"\"" + ";";
-        String sql = "SELECT * FROM IMAGE_TAG_RELATION where path = "+"\'" + path +"\';";
-        Cursor a = db.rawQuery(sql, null);
-        a.moveToFirst();
-        Toast.makeText (context, a.getString(0) + " " + a.getString(1) + " " + a.getString(2), Toast.LENGTH_LONG).show();
-        a.close();
-    }
     public ArrayList<String> getTagsByPath(String path){
         String sql = "SELECT * FROM IMAGE_TAG_RELATION where path = "+"\'" +path+"\';";
         Cursor a = db.rawQuery(sql, null);
