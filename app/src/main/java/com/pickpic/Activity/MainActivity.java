@@ -1,31 +1,45 @@
 package com.pickpic.Activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.*;
-import android.support.v4.view.PagerAdapter;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.pickpic.Adapter.DirectoryTabListViewAdaptor;
 import com.pickpic.Adapter.TabAdapter;
 import com.pickpic.R;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        // 툴바 선언
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TabLayout tabLayout =
-                (TabLayout) findViewById(R.id.tab_layout);
+        // 탭 선언
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(
                 R.drawable.ic_folder_black_48dp));
@@ -65,4 +79,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public  void search_btn(View view){
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void vert_btn(View v){
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick(MenuItem menu){
+                switch (menu.getItemId()){
+                    case R.id.syncMenu:
+                        Toast.makeText(getApplicationContext(),"synchronize is selected",Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.howToUseMenu:
+                        Toast.makeText(getApplicationContext(),"How to use is selected",Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.serviceCenterMenu:
+                        Toast.makeText(getApplicationContext(),"Service center is selected",Toast.LENGTH_SHORT).show();
+                        Intent intent3 = new Intent(MainActivity.this, ServiceCenterActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
+    }
+
+
 }
