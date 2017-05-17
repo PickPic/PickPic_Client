@@ -25,7 +25,7 @@ import java.net.URISyntaxException;
 
 public class AutoTagGenerator {
 
-    public static void autoTagGenerate(final Context context, String path){
+    public static void autoTagGenerate(final Context context, String path) {
 
         File f = new File(path);
 
