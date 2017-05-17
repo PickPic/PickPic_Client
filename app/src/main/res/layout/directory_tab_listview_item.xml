@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="5dip"
+        android:id="@+id/directory_thumbnail"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:layout_weight="3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/directory_title"
+            android:textSize="20dp"
+            android:textColor="#000000"
+            android:gravity="center_vertical"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/directory_cnt"
+            android:textSize="12dp"
+            android:textColor="#666666"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>

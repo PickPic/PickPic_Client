@@ -35,6 +35,7 @@
 
             <ImageButton
                 android:id="@+id/search_button"
+                android:onClick="search_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -45,6 +46,7 @@
 
             <ImageButton
                 android:id="@+id/vert_button"
+                android:onClick="vert_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -52,9 +54,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
-
-
-
 
         </RelativeLayout>
 
