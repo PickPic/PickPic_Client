@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import com.pickpic.Item.GridViewItem;
 import com.pickpic.R;
@@ -35,7 +36,7 @@ public class TimeTabGridViewAdaptor extends BaseAdapter{
         }
 
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.time_thumbnail);
-
+        iconImageView.setScaleType(ImageView.ScaleType.FIT_XY);
         GridViewItem timeTabGridViewItem = gridViewItem.get(position);
 
         iconImageView.setImageBitmap(timeTabGridViewItem.getThumbnail());

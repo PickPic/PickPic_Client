@@ -47,16 +47,14 @@ public class TimeTabFragment extends Fragment {
 
         LocalImageManager.getTimeTabGridViewItemList(getContext(),adaptor);
 
-        // Inflate the layout for this fragment
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){
-                Toast toast = Toast.makeText(getContext(), "GridView clicked", Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(), "GridView clicked", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
-        // return inflater.inflate(R.layout.time_tab_fragment, container, false);
     }
 
 }
