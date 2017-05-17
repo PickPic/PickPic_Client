@@ -46,7 +46,13 @@ public class TagDBManager {
             super(context, name, null, version);
             // TODO Auto-generated constructor stub
         }
-
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+            super.onOpen(db);
+            if (!db.isReadOnly()) {
+                db.execSQL("PRAGMA foreign_keys=ON;");
+            }
+        }
         // 생성된 DB가 없을 경우에 한번만 호출됨
         @Override
         public void onCreate(SQLiteDatabase sdb) {
@@ -76,7 +82,7 @@ public class TagDBManager {
     public void initTable() {
         db.execSQL("DROP TABLE IMAGE_TAG_RELATION");
         db.execSQL("DROP TABLE IMAGES");
-        db.execSQL("CREATE TABLE IMAGES (path TEXT)");
+        db.execSQL("CREATE TABLE IMAGES (path TEXT primary key)");
         db.execSQL("CREATE TABLE IMAGE_TAG_RELATION " +
                 "(path TEXT REFERENCES IMAGES(path) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                 "tagValue TEXT, tagType INTEGER)");
@@ -92,6 +98,7 @@ public class TagDBManager {
         a.close();
         return results;
     }
+
     public ArrayList<String> getPathsByTags(ArrayList<String> tags){
         String sql = "SELECT * FROM IMAGE_TAG_RELATION where tagValue = \"" + tags.get(0) + "\";";
         ArrayList<String> results = new ArrayList<String>();
@@ -129,7 +136,7 @@ public class TagDBManager {
     }
 
     public void removeImage(String path) {
-        db.execSQL("DELETE FROM IMAGES WHERE path = " + path);
+        db.execSQL("DELETE FROM IMAGES WHERE path = \"" + path + "\"");
     }
 
     public void removeTag(String path, String tag) {
