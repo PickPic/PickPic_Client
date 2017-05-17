@@ -28,14 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        searchButton = (ImageButton) findViewById(R.id.vert_button);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,TestActivity.class);
-                startActivity(intent);
-            }
-        });
+
         TabLayout tabLayout =
                 (TabLayout) findViewById(R.id.tab_layout);
 
