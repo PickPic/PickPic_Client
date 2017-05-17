@@ -27,7 +27,6 @@ public class AutoTagGenerator {
 
     public static void autoTagGenerate(final Context context, String path){
 
-        Log.v("SENDING_IMAGE", path);
         File f = new File(path);
 
         Ion.with(context)
