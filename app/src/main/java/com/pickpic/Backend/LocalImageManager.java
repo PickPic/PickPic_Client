@@ -27,7 +27,20 @@ public class LocalImageManager {
 
         return  list;
     }
+    public static String getDateByPath(Context context, String path){
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_ADDED};
+        String[] selection = {path};
+        String date = null;
 
+        Cursor cursor = context.getContentResolver().query(uri, projection, MediaStore.Images.Media.DATA + "=?", selection, "DATE_ADDED DESC");
+
+        if(cursor.moveToNext()){
+            int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED);
+            date = cursor.getString(columnIndex);
+        }
+        return date;
+    }
     public static GridViewItem getGridViewItem(Context context, String path){
 
         GridViewItem gridViewItem  = new GridViewItem();
@@ -43,6 +56,9 @@ public class LocalImageManager {
         if (cursor.moveToNext()){
             columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
             gridViewItem.setPath(cursor.getString(columnIndex));
+
+            columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED);
+            gridViewItem.setDate(cursor.getString(columnIndex));
 
             columnIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
             long thumbnail = cursor.getLong(columnIndex);
