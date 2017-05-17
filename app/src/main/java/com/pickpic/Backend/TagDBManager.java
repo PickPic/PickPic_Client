@@ -92,15 +92,29 @@ public class TagDBManager {
         a.close();
         return results;
     }
-
-    public ArrayList<String> getPathByTag(String tag) {
-        String sql = "SELECT * FROM IMAGE_TAG_RELATION where tagValue = \"" + tag + "\r\";";
-        Cursor a = db.rawQuery(sql, null);
+    public ArrayList<String> getPathsByTags(ArrayList<String> tags){
+        String sql = "SELECT * FROM IMAGE_TAG_RELATION where tagValue = \"" + tags.get(0) + "\";";
         ArrayList<String> results = new ArrayList<String>();
-        while (a.moveToNext()) {
-            results.add(a.getString(0));
+
+        Cursor a = db.rawQuery(sql, null);
+        ArrayList<String> first = new ArrayList<>();
+        while(a.moveToNext()){
+            first.add(a.getString(0));
         }
         a.close();
+        for(int i = 0; i<first.size(); i++){
+            for(int j = 1; j<tags.size(); j++){
+                sql = "SELECT * FROM IMAGE_TAG_RELATION where path = \"" + first.get(i) + "\" AND tagValue = \"" + tags.get(j) + "\";";
+                Cursor b = db.rawQuery(sql,null);
+                if(b.isAfterLast()){
+                    break;
+                }
+                if(j == tags.size() -1){
+                    results.add(first.get(i));
+                }
+                b.close();
+            }
+        }
         return results;
     }
 
