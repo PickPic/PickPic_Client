@@ -12,22 +12,24 @@ public class Syncronizer {
 
 
     public static void synchronize(Context context){
-        ArrayList<String> localStorage = LocalImageManager.getAllImagePath(context);
-        ArrayList<String> localDB = null;
+
         TagDBManager tagDBManager = new TagDBManager(context);
+        ArrayList<String> localImages = LocalImageManager.getAllImagePath(context);
+        ArrayList<String> TagDB = null; // TagDB에서 모든 이미지 목록 가져오기
+
         int i = 0;
         int j = 0;
 
-        while(i < localStorage.size() || j < localDB.size()){
-            if(localStorage.get(i).equals(localDB.get(j))){
+        while(i < localImages.size() || j < TagDB.size()){
+            if(localImages.get(i).equals(TagDB.get(j))){
                 i++;
                 j++;
             } else {
-                //DB에서 localDB.get(j)에 해당하는 항목 지움
+                tagDBManager.removeImage(localImages.get(i));
                 j++;
             }
-            if(j == localDB.size()){
-                AutoTagGenerator.autoTagGenerate(context, localStorage.get(i));
+            if(j == TagDB.size()){
+                AutoTagGenerator.autoTagGenerate(context, localImages.get(i));
             }
         }
     }
