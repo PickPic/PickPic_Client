@@ -62,6 +62,7 @@ public class TagDBManager {
             // TODO Auto-generated method stub
         }
     }
+
     public void initTable(){
         db.execSQL("DROP TABLE IMAGE_TAG_RELATION");
         db.execSQL("DROP TABLE IMAGES");
@@ -69,6 +70,16 @@ public class TagDBManager {
         db.execSQL("CREATE TABLE IMAGE_TAG_RELATION " +
                 "(path TEXT REFERENCES IMAGES(path) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                 "tagValue TEXT, tagType INTEGER)");
+    }
+    public ArrayList<String> getAllTags(){
+        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = "+"\'" + TagDBManager.NORMAL_TAG +"\';";
+        Cursor a = db.rawQuery(sql, null);
+        ArrayList<String> results = new ArrayList<String>();
+        while(a.moveToNext()){
+            results.add(a.getString(0));
+        }
+        a.close();
+        return results;
     }
     public void getTestTag(String path){
 
