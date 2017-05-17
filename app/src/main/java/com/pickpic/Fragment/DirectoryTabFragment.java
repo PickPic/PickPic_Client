@@ -16,8 +16,11 @@ import android.widget.ListView;
 import com.pickpic.Activity.MainActivity;
 import com.pickpic.Activity.SearchActivity;
 import com.pickpic.Adapter.DirectoryTabListViewAdaptor;
+import com.pickpic.Backend.LocalImageManager;
 import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -40,9 +43,10 @@ public class DirectoryTabFragment extends Fragment {
         inflater.inflate(R.layout.directory_tab_fragment, container, false);
         listview.setAdapter(adaptor);
 
-        adaptor.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.ic_folder_black_48dp), "Title", "200");
-        adaptor.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.ic_access_time_black_48dp), "title2", "5");
-        adaptor.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.ic_local_offer_black_48dp), "title3", "11");
+        ArrayList<DirectoryTabListViewItem> list = LocalImageManager.getDirectoryTabListViewItem(getContext());
+        for(int i = 0;i < list.size(); i++){
+            adaptor.addItem(list.get(i));
+        }
         // Inflate the layout for this fragment
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){

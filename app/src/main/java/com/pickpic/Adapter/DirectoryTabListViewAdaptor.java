@@ -1,6 +1,7 @@
 package com.pickpic.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,9 +46,9 @@ public class DirectoryTabListViewAdaptor extends BaseAdapter{
 
         DirectoryTabListViewItem listViewItem = directoryTabListViewItem.get(position);
 
-        iconImageView.setImageDrawable(listViewItem.getIcon());
-        titleTextView.setText(listViewItem.getTitle());
-        cntTextView.setText(listViewItem.getDesc());
+        iconImageView.setImageBitmap(listViewItem.thumbnail);
+        titleTextView.setText(listViewItem.name);
+        cntTextView.setText(listViewItem.count + "");
 
         return  convertView;
     }
@@ -62,13 +63,7 @@ public class DirectoryTabListViewAdaptor extends BaseAdapter{
         return directoryTabListViewItem.get(position) ;
     }
 
-    public void addItem(Drawable icon, String title, String desc) {
-        DirectoryTabListViewItem item = new DirectoryTabListViewItem();
-
-        item.setIcon(icon);
-        item.setTitle(title);
-        item.setDesc(desc);
-
+    public void addItem(DirectoryTabListViewItem item) {
         directoryTabListViewItem.add(item);
     }
 
