@@ -7,9 +7,12 @@
     <!-- TODO: Update blank fragment layout -->
 
     <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnWidth="72dp"
+        android:id="@+id/time_tab_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:maxWidth="72dp"
+        android:maxHeight="72dp"
+        android:adjustViewBounds="true"
         android:gravity="center"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"></GridView>
