@@ -15,8 +15,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.util.Log;
-import android.widget.Toast;
 
 //DB를 총괄관리
 public class TagDBManager {
@@ -77,16 +75,6 @@ public class TagDBManager {
         ArrayList<String> results = new ArrayList<String>();
         while(a.moveToNext()){
             results.add(a.getString(0));
-        }
-        a.close();
-        return results;
-    }
-    public ArrayList<String> getTagsByPath(String path){
-        String sql = "SELECT * FROM IMAGE_TAG_RELATION where path = "+"\'" +path+"\';";
-        Cursor a = db.rawQuery(sql, null);
-        ArrayList<String> results = new ArrayList<String>();
-        while(a.moveToNext()){
-            results.add(a.getString(1));
         }
         a.close();
         return results;

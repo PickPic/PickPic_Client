@@ -41,9 +41,9 @@ public class AutoTagGenerator {
                             Log.v("Json",jsonObject.get("num").toString());
                             Log.v("Json",jsonObject.get("tag").toString());
                             Log.v("Json",jsonObject.get("probability").toString());
-                            //TagDBManager tagDBManager = new TagDBManager(context);
-                           // tagDBManager.insertImage(Uri.parse(jsonObject.get("uri").toString()));
-                           // tagDBManager.insertTag(Uri.parse(jsonObject.get("uri").toString()),jsonObject.get("tag").toString(),0);
+                            TagDBManager tagDBManager = new TagDBManager(context);
+                            tagDBManager.insertImage(jsonObject.get("path").toString());
+                            tagDBManager.insertTag(jsonObject.get("path").toString(),jsonObject.get("tag").toString(),0);
 
                         } catch (JSONException e1) {
                             e1.printStackTrace();
