@@ -3,6 +3,7 @@ package com.pickpic.Backend;
 /**
  * Created by Arsene holmes on 2017-05-05.
  */
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -61,7 +62,18 @@ public class TagDBManager {
         }
     }
 
-    public void initTable(){
+    public ArrayList<String> getAllImages() {
+        String sql = "SELECT DISTINCT path FROM IMAGES;";
+        Cursor a = db.rawQuery(sql, null);
+        ArrayList<String> results = new ArrayList<String>();
+        while (a.moveToNext()) {
+            results.add(a.getString(0));
+        }
+        a.close();
+        return results;
+    }
+
+    public void initTable() {
         db.execSQL("DROP TABLE IMAGE_TAG_RELATION");
         db.execSQL("DROP TABLE IMAGES");
         db.execSQL("CREATE TABLE IMAGES (path TEXT)");
@@ -69,39 +81,59 @@ public class TagDBManager {
                 "(path TEXT REFERENCES IMAGES(path) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                 "tagValue TEXT, tagType INTEGER)");
     }
-    public ArrayList<String> getAllTags(){
-        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = "+"\'" + TagDBManager.NORMAL_TAG +"\';";
+
+    public ArrayList<String> getAllTags() {
+        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = " + "\'" + TagDBManager.NORMAL_TAG + "\';";
         Cursor a = db.rawQuery(sql, null);
         ArrayList<String> results = new ArrayList<String>();
-        while(a.moveToNext()){
+        while (a.moveToNext()) {
             results.add(a.getString(0));
         }
         a.close();
         return results;
     }
-    public ArrayList<String> getPathByTag(String tag){
-        String sql = "SELECT * FROM IMAGE_TAG_RELATION where tagValue = \"" + tag + "\r\";";
-        Cursor a = db.rawQuery(sql, null);
+    public ArrayList<String> getPathsByTags(ArrayList<String> tags){
+        String sql = "SELECT * FROM IMAGE_TAG_RELATION where tagValue = \"" + tags.get(0) + "\";";
         ArrayList<String> results = new ArrayList<String>();
+
+        Cursor a = db.rawQuery(sql, null);
+        ArrayList<String> first = new ArrayList<>();
         while(a.moveToNext()){
-            results.add(a.getString(0));
+            first.add(a.getString(0));
         }
         a.close();
+        for(int i = 0; i<first.size(); i++){
+            for(int j = 1; j<tags.size(); j++){
+                sql = "SELECT * FROM IMAGE_TAG_RELATION where path = \"" + first.get(i) + "\" AND tagValue = \"" + tags.get(j) + "\";";
+                Cursor b = db.rawQuery(sql,null);
+                if(b.isAfterLast()){
+                    break;
+                }
+                if(j == tags.size() -1){
+                    results.add(first.get(i));
+                }
+                b.close();
+            }
+        }
         return results;
     }
+
     // 데이터 추가
-    public void insertImage(String path){
+    public void insertImage(String path) {
         db.execSQL("INSERT INTO IMAGES VALUES( \"" + path + "\")");
     }
-    public void insertTag(String path, String tag, int tagType){
+
+    public void insertTag(String path, String tag, int tagType) {
         db.execSQL("INSERT INTO IMAGE_TAG_RELATION VALUES(" +
-                "\""+path + "\""+", " + "\""+tag + "\""+"," + "\""+tagType +"\""+")");
+                "\"" + path + "\"" + ", " + "\"" + tag + "\"" + "," + "\"" + tagType + "\"" + ")");
     }
-    public void removeImage(String path){
+
+    public void removeImage(String path) {
         db.execSQL("DELETE FROM IMAGES WHERE path = " + path);
     }
-    public void removeTag(String path, String tag){
-        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE path = " + path +"AND tagValue = "+"tag");
+
+    public void removeTag(String path, String tag) {
+        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE path = " + path + "AND tagValue = " + "tag");
     }
 /*
     // 데이터 갱신

@@ -9,16 +9,6 @@ import android.graphics.Bitmap;
 public class GridViewItem {
     private Bitmap thumbnail;
     private String path;
-    private String date;
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getDate() {
-
-        return date;
-    }
 
     public void setPath(String path) {
         this.path = path;

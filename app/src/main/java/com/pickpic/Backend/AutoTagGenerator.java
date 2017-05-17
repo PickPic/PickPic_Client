@@ -25,7 +25,7 @@ import java.net.URISyntaxException;
 
 public class AutoTagGenerator {
 
-    public static void autoTagGenerate(final Context context, String path){
+    public static void autoTagGenerate(final Context context, String path) {
 
         File f = new File(path);
 
@@ -38,12 +38,15 @@ public class AutoTagGenerator {
                     public void onCompleted(Exception e, String result) {
                         try {
                             JSONObject jsonObject = new JSONObject(result);
-                            Log.v("Json",jsonObject.get("num").toString());
-                            Log.v("Json",jsonObject.get("tag").toString());
-                            Log.v("Json",jsonObject.get("probability").toString());
+                            int size = jsonObject.getInt("num");
                             TagDBManager tagDBManager = new TagDBManager(context);
-                            tagDBManager.insertImage(jsonObject.get("path").toString());
-                            tagDBManager.insertTag(jsonObject.get("path").toString(),jsonObject.get("tag").toString(),0);
+                            for(int i = 0; i<size; i++){
+                                Log.v("Json",jsonObject.get("tag" + i).toString());
+                                Log.v("Json",jsonObject.get("probability" + i).toString());
+                                tagDBManager.insertImage(jsonObject.get("path").toString());
+                                tagDBManager.insertTag(jsonObject.get("path" +i).toString(),jsonObject.get("tag" + i).toString(),TagDBManager.NORMAL_TAG);
+                            }
+
 
                         } catch (JSONException e1) {
                             e1.printStackTrace();
