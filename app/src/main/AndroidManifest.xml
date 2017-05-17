@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.SearchActivity" />
+        <activity android:name=".Activity.ServiceCenterActivity" />
         <activity android:name=".Fragment.RecommendTagListFragment" />
         <activity android:name=".Fragment.SearchResultFragment"></activity>
     </application>
