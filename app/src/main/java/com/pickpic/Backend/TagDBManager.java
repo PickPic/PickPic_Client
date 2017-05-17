@@ -61,6 +61,17 @@ public class TagDBManager {
         }
     }
 
+    public ArrayList<String> getAllImages(){
+        String sql = "SELECT DISTINCT path FROM IMAGES;";
+        Cursor a = db.rawQuery(sql, null);
+        ArrayList<String> results = new ArrayList<String>();
+        while(a.moveToNext()){
+            results.add(a.getString(0));
+        }
+        a.close();
+        return results;
+    }
+
     public void initTable(){
         db.execSQL("DROP TABLE IMAGE_TAG_RELATION");
         db.execSQL("DROP TABLE IMAGES");
