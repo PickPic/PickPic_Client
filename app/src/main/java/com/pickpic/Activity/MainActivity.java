@@ -13,6 +13,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.*;
 import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +26,11 @@ import android.widget.Toast;
 
 import com.pickpic.Adapter.DirectoryTabListViewAdaptor;
 import com.pickpic.Adapter.TabAdapter;
+import com.pickpic.Backend.Syncronizer;
+import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -79,6 +84,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        TagDBManager tagDBManager = new TagDBManager(this);
+
+        ArrayList<String> sync =  tagDBManager.getAllTags();
+        Log.v("sync before", "tag num : "+sync.size());
+        sync = tagDBManager.getAllImages();
+        Log.v("sync before", "image num : "+sync.size());
+
+        Syncronizer.synchronize(this);
+
+        sync =  tagDBManager.getAllTags();
+        Log.v("sync after", "tag num : "+sync.size());
+        sync = tagDBManager.getAllImages();
+        Log.v("sync after", "image num : "+sync.size());
     }
 
     public  void search_btn(View view){
