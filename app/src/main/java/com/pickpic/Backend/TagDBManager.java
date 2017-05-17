@@ -15,9 +15,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
 
 //DB를 총괄관리
 public class TagDBManager {
@@ -28,7 +25,7 @@ public class TagDBManager {
     public final static int DIRECTORY_TAG = 2;
     // DB관련 객체 선언
     private OpenHelper opener; // DB opener
-    private SQLiteDatabase db; // DB controller
+    private SQLiteDatabase db; // DB controllers
 
     // 부가적인 객체들
     private Context context;
@@ -52,13 +49,10 @@ public class TagDBManager {
         // 생성된 DB가 없을 경우에 한번만 호출됨
         @Override
         public void onCreate(SQLiteDatabase sdb) {
-            Log.v("sssss","ok");
-            sdb.execSQL("CREATE TABLE IMAGES (uri TEXT)");
+            sdb.execSQL("CREATE TABLE IMAGES (path TEXT)");
             sdb.execSQL("CREATE TABLE IMAGE_TAG_RELATION " +
-                    "(uri TEXT REFERENCES IMAGES(uri) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                    "(path TEXT REFERENCES IMAGES(path) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                     "tagValue TEXT, tagType INTEGER)");
-
-            Log.v("sssss","ok");
         }
 
         @Override
@@ -66,63 +60,48 @@ public class TagDBManager {
             // TODO Auto-generated method stub
         }
     }
-    public void refreshTable(){
+
+    public void initTable(){
         db.execSQL("DROP TABLE IMAGE_TAG_RELATION");
         db.execSQL("DROP TABLE IMAGES");
-        db.execSQL("CREATE TABLE IMAGES (uri TEXT)");
+        db.execSQL("CREATE TABLE IMAGES (path TEXT)");
         db.execSQL("CREATE TABLE IMAGE_TAG_RELATION " +
-                "(uri TEXT REFERENCES IMAGES(uri) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
+                "(path TEXT REFERENCES IMAGES(path) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                 "tagValue TEXT, tagType INTEGER)");
     }
-    public void getTestTag(Uri uri){
-
-        //String sql = "SELECT * FROM IMAGES WHERE uri = \""+ uri.toString()+"\"" + ";";
-        String sql = "SELECT * FROM IMAGE_TAG_RELATION where uri = "+"\'" + uri.toString()+"\';";
-        Cursor a = db.rawQuery(sql, null);
-        a.moveToFirst();
-        Log.v("ssssss", a.getString(0));
-        Log.v("ssssss", a.getString(1));
-        Log.v("ssssss", a.getString(2));
-        Toast.makeText (context, a.getString(0) + " " + a.getString(1) + " " + a.getString(2), Toast.LENGTH_LONG).show();
-        a.close();
-    }
-    public ArrayList<String> getTagsByUri(Uri uri){
-        String sql = "SELECT * FROM IMAGE_TAG_RELATION where uri = "+"\'" + uri.toString()+"\';";
+    public ArrayList<String> getAllTags(){
+        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = "+"\'" + TagDBManager.NORMAL_TAG +"\';";
         Cursor a = db.rawQuery(sql, null);
         ArrayList<String> results = new ArrayList<String>();
         while(a.moveToNext()){
-            results.add(a.getString(1));
+            results.add(a.getString(0));
         }
         a.close();
         return results;
     }
-    public ArrayList<Uri> getUriByTag(String tag){
+    public ArrayList<String> getPathByTag(String tag){
         String sql = "SELECT * FROM IMAGE_TAG_RELATION where tagValue = \"" + tag + "\r\";";
         Cursor a = db.rawQuery(sql, null);
-        ArrayList<Uri> results = new ArrayList<Uri>();
+        ArrayList<String> results = new ArrayList<String>();
         while(a.moveToNext()){
-            results.add(Uri.parse(a.getString(0)));
+            results.add(a.getString(0));
         }
         a.close();
         return results;
     }
     // 데이터 추가
-    public void insertImage(Uri uri){
-        db.execSQL("INSERT INTO IMAGES VALUES( \"" + uri + "\")");
-
-        Log.v("sssss","ok");
+    public void insertImage(String path){
+        db.execSQL("INSERT INTO IMAGES VALUES( \"" + path + "\")");
     }
-    public void insertTag(Uri uri, String tag, int tagType){
+    public void insertTag(String path, String tag, int tagType){
         db.execSQL("INSERT INTO IMAGE_TAG_RELATION VALUES(" +
-                "\""+uri + "\""+", " + "\""+tag + "\""+"," + "\""+tagType +"\""+")");
-
-        Log.v("sssss","ok");
+                "\""+path + "\""+", " + "\""+tag + "\""+"," + "\""+tagType +"\""+")");
     }
-    public void removeImage(Uri uri){
-        db.execSQL("DELETE FROM IMAGES WHERE uri = " + uri);
+    public void removeImage(String path){
+        db.execSQL("DELETE FROM IMAGES WHERE path = " + path);
     }
-    public void removeTag(Uri uri, String tag){
-        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE uri = " + uri +"AND tagValue = "+"tag");
+    public void removeTag(String path, String tag){
+        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE path = " + path +"AND tagValue = "+"tag");
     }
 /*
     // 데이터 갱신

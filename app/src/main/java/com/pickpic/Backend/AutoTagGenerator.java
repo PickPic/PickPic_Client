@@ -25,19 +25,13 @@ import java.net.URISyntaxException;
 
 public class AutoTagGenerator {
 
-    public static void autoTagGenerate(final Context context, Uri uri){
-        String path = null;
-        try {
-            path = getFilePath(context, uri);
-        } catch(Exception e){
+    public static void autoTagGenerate(final Context context, String path){
 
-        }
-        Log.v("SENDING_IMAGE", path);
         File f = new File(path);
 
         Ion.with(context)
-                .load("POST","http://125.140.237.189:8080/upload") //server ip
-                .setMultipartFile(uri.toString(), f.getName(), f)
+                .load("http://165.194.104.17:8080/upload") //server ip
+                .setMultipartFile(path, f.getName(), f)
                 .asString()
                 .setCallback(new FutureCallback<String>() {
                     @Override
@@ -48,8 +42,8 @@ public class AutoTagGenerator {
                             Log.v("Json",jsonObject.get("tag").toString());
                             Log.v("Json",jsonObject.get("probability").toString());
                             TagDBManager tagDBManager = new TagDBManager(context);
-                            tagDBManager.insertImage(Uri.parse(jsonObject.get("uri").toString()));
-                            tagDBManager.insertTag(Uri.parse(jsonObject.get("uri").toString()),jsonObject.get("tag").toString(),0);
+                            tagDBManager.insertImage(jsonObject.get("path").toString());
+                            tagDBManager.insertTag(jsonObject.get("path").toString(),jsonObject.get("tag").toString(),0);
 
                         } catch (JSONException e1) {
                             e1.printStackTrace();
@@ -59,7 +53,7 @@ public class AutoTagGenerator {
                 });
     }
 
-    static String getFilePath(Context context, Uri uri) throws URISyntaxException {
+    public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
         String selection = null;
         String[] selectionArgs = null;
         // Uri is different in versions after KITKAT (Android 4.4), we need to
