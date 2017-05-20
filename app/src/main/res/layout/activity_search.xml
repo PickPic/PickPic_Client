@@ -1,9 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pickpic.Activity.SearchActivity">
+    tools:context="com.pickpic.Activity.SearchActivity"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button Example"/>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--search bar
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="changefragment"
+        android:onClick="selectFrag"
+        />
+-->
+
+
+
+
+
+
+
+    <!--fragment1(recommandTagListFragment)
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_place"
+        android:name="com.pickpic.Fragment.RecommendTagListFragment"
+        tools:layout="@layout/activity_search" />
+-->
+
+<!--
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchresultfragment"
+        android:name="com.pickpic.Fragment.SearchResultFragment"
+        tools:layout="@layout/fragment_search_result_item" />
+-->
+
+</LinearLayout>
