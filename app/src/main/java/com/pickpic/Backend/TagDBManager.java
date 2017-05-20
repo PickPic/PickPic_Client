@@ -107,6 +107,10 @@ public class TagDBManager {
         return results;
     }
 
+    public ArrayList<String> getTagsByPath(String path){
+        String sql = "SELECT tagValue FROM IMAGE_TAG_RELATION where path = \"" + path + "\";";
+        ArrayList<String> results = new ArrayList<String>();
+        
         Cursor a = db.rawQuery(sql, null);
         while(a.moveToNext()){
             results.add(a.getString(0));
