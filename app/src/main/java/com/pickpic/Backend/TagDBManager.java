@@ -86,7 +86,7 @@ public class TagDBManager {
     }
 
     public ArrayList<String> getAllTags() {
-        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION;";
+        String sql = "SELECT DISTINCT tagValue, COUNT(*) AS tagCount FROM IMAGE_TAG_RELATION GROUP BY tagValue ORDER BY tagCount DESC;";
         Cursor a = db.rawQuery(sql, null);
         ArrayList<String> results = new ArrayList<String>();
         while (a.moveToNext()) {
