@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         TagDBManager tagDBManager = new TagDBManager(this);
 
         ArrayList<String> sync =  tagDBManager.getAllTags();
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         Log.v("sync after", "tag num : "+sync.size());
         sync = tagDBManager.getAllImages();
         Log.v("sync after", "image num : "+sync.size());
-
+        */
     }
 
     public  void search_btn(View view){

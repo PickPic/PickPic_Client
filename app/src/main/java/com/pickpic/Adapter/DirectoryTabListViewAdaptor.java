@@ -1,8 +1,7 @@
 package com.pickpic.Adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pickpic.Backend.ThumbnailManager;
 import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.R;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -38,6 +37,7 @@ public class DirectoryTabListViewAdaptor extends BaseAdapter{
         if(convertView == null){
            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.directory_tab_listview_item, parent, false);
+
         }
 
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.directory_thumbnail);
@@ -46,13 +46,12 @@ public class DirectoryTabListViewAdaptor extends BaseAdapter{
 
         DirectoryTabListViewItem listViewItem = directoryTabListViewItem.get(position);
 
-        iconImageView.setImageBitmap(listViewItem.thumbnail);
-        titleTextView.setText(listViewItem.name);
-        cntTextView.setText(listViewItem.count + "");
+        new ThumbnailManager(iconImageView, listViewItem.getThumbnail(),parent.getContext()).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        titleTextView.setText(listViewItem.getName());
+        cntTextView.setText(listViewItem.getCount() + "");
 
         return  convertView;
     }
-
     @Override
     public long getItemId(int position){
         return position;
