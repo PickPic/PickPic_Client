@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Log.v("sync before", "image num : "+sync.size());
 
         Syncronizer.synchronize(this);
-
+        
         sync =  tagDBManager.getAllTags();
         Log.v("sync after", "tag num : "+sync.size());
         sync = tagDBManager.getAllImages();
