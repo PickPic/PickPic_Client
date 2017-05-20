@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pickpic.Activity.GalleryActivity;
 import com.pickpic.Activity.SearchActivity;
 import com.pickpic.Adapter.TimeTabGridViewAdaptor;
 import com.pickpic.Backend.LocalImageManager;
@@ -40,18 +41,24 @@ public class TimeTabFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.time_tab_fragment, container, false);
         TimeTabGridViewAdaptor adaptor = new TimeTabGridViewAdaptor();
-        GridView gridView = (GridView) view.findViewById(R.id.time_tab_gridview);
+        final GridView gridView = (GridView) view.findViewById(R.id.time_tab_gridview);
 
         inflater.inflate(R.layout.time_tab_fragment, container, false);
         gridView.setAdapter(adaptor);
 
         LocalImageManager.getTimeTabGridViewItemList(getContext(),adaptor);
 
+        final ArrayList<String> imagepath = LocalImageManager.getAllImagePath(getContext());
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){
-                Toast.makeText(getContext(), "GridView clicked", Toast.LENGTH_SHORT).show();
+                String selectedimage = imagepath.get(position);
+                //Toast.makeText(getContext(), "GridView clicked " + position + "\n" + selectedimage, Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                intent.putExtra("filepath", selectedimage);
+                startActivity(intent);
             }
         });
         return view;
