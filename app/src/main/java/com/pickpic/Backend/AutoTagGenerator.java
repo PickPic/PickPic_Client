@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 /**
  * Created by 5p on 2017-05-03.
@@ -25,32 +26,46 @@ import java.net.URISyntaxException;
 
 public class AutoTagGenerator {
 
-    public static void autoTagGenerate(final Context context, String path){
+    public static void autoTagGenerate(final Context context, String path) {
 
         File f = new File(path);
+        try {
+            Ion.with(context)
+                    .load("http://165.194.104.17:8080/upload") //server ip
+                    .setMultipartFile(path, f.getName(), f)
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            if(e != null){
+                                Log.e("ion-error", e.toString());
+                            }
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                int size = jsonObject.getInt("num");
+                                TagDBManager tagDBManager = new TagDBManager(context);
+                                for (int i = 0; i < size; i++) {
+                                    Log.v("Json", jsonObject.get("tag" + i).toString());
+                                    Log.v("Json", jsonObject.get("probability" + i).toString());
+                                    Log.v("Json", jsonObject.get("probability" + i).toString());
+                                    tagDBManager.insertImage(jsonObject.get("path").toString());
+                                    tagDBManager.insertTag(jsonObject.get("path").toString(), jsonObject.get("tag" + i).toString(), TagDBManager.NORMAL_TAG);
+                                }
 
-        Ion.with(context)
-                .load("http://165.194.104.17:8080/upload") //server ip
-                .setMultipartFile(path, f.getName(), f)
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String result) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(result);
-                            Log.v("Json",jsonObject.get("num").toString());
-                            Log.v("Json",jsonObject.get("tag").toString());
-                            Log.v("Json",jsonObject.get("probability").toString());
-                            TagDBManager tagDBManager = new TagDBManager(context);
-                            tagDBManager.insertImage(jsonObject.get("path").toString());
-                            tagDBManager.insertTag(jsonObject.get("path").toString(),jsonObject.get("tag").toString(),0);
+                                ArrayList<String> test = tagDBManager.getAllImages();
+                                Log.v("generater add image", "image num : " + test.size());
+                                test = tagDBManager.getAllTags();
+                                Log.v("generater add tag", "tag num : " + test.size());
 
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
+                            } catch (Exception ex) {
+                                Log.v("exception", ex.toString());
+                            }
                         }
-                    }
 
-                });
+                    });
+        } catch(Exception ex){
+            Log.v("exception", ex.toString());
+        }
     }
 
     public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
