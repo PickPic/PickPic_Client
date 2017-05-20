@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
         sync = tagDBManager.getAllImages();
         Log.v("sync before", "image num : "+sync.size());
 
-        Syncronizer.synchronize(this);
-
+        
+        Synchronizer.synchronize(this);
         sync =  tagDBManager.getAllTags();
         Log.v("sync after", "tag num : "+sync.size());
         sync = tagDBManager.getAllImages();

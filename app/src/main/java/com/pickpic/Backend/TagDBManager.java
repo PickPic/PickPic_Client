@@ -9,10 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by 5p on 2017-05-03.
- */
-
 import java.util.ArrayList;
 
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -91,7 +87,7 @@ public class TagDBManager {
     }
 
     public ArrayList<String> getAllTags() {
-        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = " + "\'" + TagDBManager.NORMAL_TAG + "\';";
+        String sql = "SELECT DISTINCT tagValue, COUNT(*) AS tagCount FROM IMAGE_TAG_RELATION GROUP BY tagValue ORDER BY tagCount DESC;";
         Cursor a = db.rawQuery(sql, null);
         ArrayList<String> results = new ArrayList<String>();
         while (a.moveToNext()) {
@@ -106,6 +102,14 @@ public class TagDBManager {
         ArrayList<TagTabListViewItem> results = new ArrayList<>();
         while (a.moveToNext()) {
             results.add(new TagTabListViewItem(a.getString(0)));
+        }
+        a.close();
+        return results;
+    }
+
+        Cursor a = db.rawQuery(sql, null);
+        while(a.moveToNext()){
+            results.add(a.getString(0));
         }
         a.close();
         return results;
