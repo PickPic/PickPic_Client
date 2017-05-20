@@ -9,13 +9,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by 5p on 2017-05-03.
- */
-
 import java.util.ArrayList;
 
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
 
 import com.pickpic.Item.TagTabListViewItem;
 
@@ -58,7 +55,7 @@ public class TagDBManager {
         // 생성된 DB가 없을 경우에 한번만 호출됨
         @Override
         public void onCreate(SQLiteDatabase sdb) {
-            sdb.execSQL("CREATE TABLE IMAGES (path TEXT)");
+            sdb.execSQL("CREATE TABLE IMAGES (path TEXT primary key)");
             sdb.execSQL("CREATE TABLE IMAGE_TAG_RELATION " +
                     "(path TEXT REFERENCES IMAGES(path) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                     "tagValue TEXT, tagType INTEGER)");
@@ -91,7 +88,7 @@ public class TagDBManager {
     }
 
     public ArrayList<String> getAllTags() {
-        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = " + "\'" + TagDBManager.NORMAL_TAG + "\';";
+        String sql = "SELECT DISTINCT tagValue, COUNT(*) AS tagCount FROM IMAGE_TAG_RELATION GROUP BY tagValue ORDER BY tagCount DESC;";
         Cursor a = db.rawQuery(sql, null);
         ArrayList<String> results = new ArrayList<String>();
         while (a.moveToNext()) {
@@ -106,6 +103,18 @@ public class TagDBManager {
         ArrayList<TagTabListViewItem> results = new ArrayList<>();
         while (a.moveToNext()) {
             results.add(new TagTabListViewItem(a.getString(0)));
+        }
+        a.close();
+        return results;
+    }
+
+    public ArrayList<String> getTagsByPath(String path){
+        String sql = "SELECT tagValue FROM IMAGE_TAG_RELATION where path = \"" + path + "\";";
+        ArrayList<String> results = new ArrayList<String>();
+        
+        Cursor a = db.rawQuery(sql, null);
+        while(a.moveToNext()){
+            results.add(a.getString(0));
         }
         a.close();
         return results;
