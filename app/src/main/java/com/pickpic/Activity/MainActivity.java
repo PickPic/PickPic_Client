@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.pickpic.Adapter.DirectoryTabListViewAdaptor;
 import com.pickpic.Adapter.TabAdapter;
-import com.pickpic.Backend.Syncronizer;
+import com.pickpic.Backend.Synchronizer;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
 
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         TagDBManager tagDBManager = new TagDBManager(this);
 
         ArrayList<String> sync =  tagDBManager.getAllTags();
@@ -94,13 +95,13 @@ public class MainActivity extends AppCompatActivity {
         sync = tagDBManager.getAllImages();
         Log.v("sync before", "image num : "+sync.size());
 
-        Syncronizer.synchronize(this);
-
+        
+        Synchronizer.synchronize(this);
         sync =  tagDBManager.getAllTags();
         Log.v("sync after", "tag num : "+sync.size());
         sync = tagDBManager.getAllImages();
         Log.v("sync after", "image num : "+sync.size());
-
+        */
     }
 
     public  void search_btn(View view){
