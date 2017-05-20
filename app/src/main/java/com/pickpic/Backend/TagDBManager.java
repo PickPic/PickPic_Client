@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
 
 import com.pickpic.Item.TagTabListViewItem;
 
@@ -54,7 +55,7 @@ public class TagDBManager {
         // 생성된 DB가 없을 경우에 한번만 호출됨
         @Override
         public void onCreate(SQLiteDatabase sdb) {
-            sdb.execSQL("CREATE TABLE IMAGES (path TEXT)");
+            sdb.execSQL("CREATE TABLE IMAGES (path TEXT primary key)");
             sdb.execSQL("CREATE TABLE IMAGE_TAG_RELATION " +
                     "(path TEXT REFERENCES IMAGES(path) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED," +
                     "tagValue TEXT, tagType INTEGER)");
