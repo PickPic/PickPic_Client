@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,17 +24,8 @@ import static android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 
 public class GalleryActivity extends AppCompatActivity {
 
-    String filepath;
-
-    public GalleryActivity() {  //이미지 key 가져오기
-        Intent intent = new Intent();
-        this.filepath = intent.getStringExtra("filepath");
-    }
-
     int touch = 1;
-
-    ImageFragment imageFragment =  new ImageFragment(filepath);
-
+    ImageFragment imageFragment;
     ImageButton back;
     ImageButton menu;
 
@@ -41,6 +33,11 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+
+        Intent intent = getIntent();
+        String filepath = intent.getStringExtra("filepath");
+
+        imageFragment = new ImageFragment(filepath);
 
         //button above
         back = (ImageButton)findViewById(R.id.backBtn);
@@ -103,7 +100,6 @@ public class GalleryActivity extends AppCompatActivity {
                 ChangeFragment(v);
             } else {
                 finish();
-                //그리드뷰로 돌아가기
             }
         }
     };

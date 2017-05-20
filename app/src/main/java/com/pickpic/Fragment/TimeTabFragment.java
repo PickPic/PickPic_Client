@@ -4,6 +4,7 @@ package com.pickpic.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +55,11 @@ public class TimeTabFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){
                 String selectedimage = imagepath.get(position);
-                //Toast.makeText(getContext(), "GridView clicked " + position + "\n" + selectedimage, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getActivity(), GalleryActivity.class);
                 intent.putExtra("filepath", selectedimage);
                 startActivity(intent);
+
             }
         });
         return view;
