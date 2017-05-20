@@ -1,5 +1,6 @@
 package com.pickpic.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         TagDBManager tagDBManager = new TagDBManager(this);
 
         ArrayList<String> sync =  tagDBManager.getAllTags();
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Log.v("sync after", "tag num : "+sync.size());
         sync = tagDBManager.getAllImages();
         Log.v("sync after", "image num : "+sync.size());
+
     }
 
     public  void search_btn(View view){
@@ -113,17 +117,27 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menu){
                 switch (menu.getItemId()){
                     case R.id.syncMenu:
-                        Toast.makeText(getApplicationContext(),"synchronize is selected",Toast.LENGTH_SHORT).show();
-                        Intent intent1 = new Intent(MainActivity.this, SearchActivity.class);
-                        startActivity(intent1);
+                        /*
+                        TagDBManager tagDBManager = new TagDBManager(MainActivity.this);
+
+                        ArrayList<String> sync =  tagDBManager.getAllTags();
+                        Log.v("sync before", "tag num : "+sync.size());
+                        sync = tagDBManager.getAllImages();
+                        Log.v("sync before", "image num : "+sync.size());
+
+                        Syncronizer.synchronize(MainActivity.this);
+
+                        sync =  tagDBManager.getAllTags();
+                        Log.v("sync after", "tag num : "+sync.size());
+                        sync = tagDBManager.getAllImages();
+                        Log.v("sync after", "image num : "+sync.size()); */
+                        Toast.makeText(getApplicationContext(),"synchronize is completed.",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.howToUseMenu:
-                        Toast.makeText(getApplicationContext(),"How to use is selected",Toast.LENGTH_SHORT).show();
                         Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.serviceCenterMenu:
-                        Toast.makeText(getApplicationContext(),"Service center is selected",Toast.LENGTH_SHORT).show();
                         Intent intent3 = new Intent(MainActivity.this, ServiceCenterActivity.class);
                         startActivity(intent3);
                         break;

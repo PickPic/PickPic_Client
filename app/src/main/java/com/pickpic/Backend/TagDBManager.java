@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
+import com.pickpic.Item.TagTabListViewItem;
 
 //DB를 총괄관리
 public class TagDBManager {
@@ -95,10 +96,21 @@ public class TagDBManager {
         a.close();
         return results;
     }
+    public ArrayList<TagTabListViewItem> getTagTabListViewItem(){
+        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = " + "\'" + TagDBManager.NORMAL_TAG + "\';";
+        Cursor a = db.rawQuery(sql, null);
+        ArrayList<TagTabListViewItem> results = new ArrayList<>();
+        while (a.moveToNext()) {
+            results.add(new TagTabListViewItem(a.getString(0)));
+        }
+        a.close();
+        return results;
+    }
+
     public ArrayList<String> getTagsByPath(String path){
         String sql = "SELECT tagValue FROM IMAGE_TAG_RELATION where path = \"" + path + "\";";
         ArrayList<String> results = new ArrayList<String>();
-
+        
         Cursor a = db.rawQuery(sql, null);
         while(a.moveToNext()){
             results.add(a.getString(0));
