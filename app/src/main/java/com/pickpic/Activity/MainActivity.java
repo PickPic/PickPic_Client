@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.pickpic.Adapter.DirectoryTabListViewAdaptor;
 import com.pickpic.Adapter.TabAdapter;
-import com.pickpic.Backend.Syncronizer;
+import com.pickpic.Backend.Synchronizer;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
 
