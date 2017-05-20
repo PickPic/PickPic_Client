@@ -49,7 +49,7 @@ public class TimeTabFragment extends Fragment {
 
         LocalImageManager.getTimeTabGridViewItemList(getContext(),adaptor);
 
-        final ArrayList<String> imagepath = LocalImageManager.getAllImagePath(getContext());
+        final ArrayList<String> imagepath = LocalImageManager.getAllImagePath(getContext(), "DESC");
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
