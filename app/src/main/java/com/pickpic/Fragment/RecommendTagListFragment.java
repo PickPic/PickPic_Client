@@ -65,7 +65,7 @@ public class RecommendTagListFragment extends Fragment {
 
         //tagall tagrecommend listview에 추가하기
         for(int i=0; i<stringArray.length; i++){
-            tagListItems.add(new RecommendTagListItem(stringArray[0]));
+            tagListItems.add(new RecommendTagListItem(stringArray[i]));
         }
 
         //tagListItems.add(new RecommendTagListItem("tag1"));

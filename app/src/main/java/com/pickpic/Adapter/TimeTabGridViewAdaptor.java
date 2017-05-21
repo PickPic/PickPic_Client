@@ -33,20 +33,22 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        ImageView imageView = null;
         final int pos = position;
         final Context context = parent.getContext();
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.time_tab_gridview_item, parent, false);
+            imageView = (ImageView) convertView.findViewById(R.id.time_thumbnail);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            convertView.setTag(imageView);
+        } else {
+            imageView = (ImageView) convertView.getTag();
         }
-
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.time_thumbnail);
-        iconImageView.setScaleType(ImageView.ScaleType.FIT_XY);
         GridViewItem gridViewItem = gridViewItems.get(position);
 
-        new ThumbnailManager(iconImageView, gridViewItem.getThumbnail(),parent.getContext()).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new ThumbnailManager(imageView , gridViewItem.getThumbnail(),parent.getContext()).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
         return convertView;
     }

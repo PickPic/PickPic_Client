@@ -36,7 +36,7 @@ public class AutoTagGenerator {
     public static int limit = 10;
     public static ArrayList<WaitSlot> que = new ArrayList<>();
     public static void autoTagGenerate(final Context context, String path) {
-        if(limit <= 0){
+        if(AutoTagGenerator.limit <= 0){
             que.add(new WaitSlot(context, path));
             return;
         }
@@ -52,21 +52,13 @@ public class AutoTagGenerator {
                         public void onCompleted(Exception e, String result) {
                             if(e != null){
                                 Log.e("ion-error", e.toString());
+                                AutoTagGenerator.limit++;
                                 if(que.size() > 0){
                                     WaitSlot tmp = que.get(0);
-                                    String path = tmp.path;
-                                    File f = new File(path);
-                                    Ion.with(tmp.context)
-                                            .load("http://165.194.104.17:8080/upload") //server ip
-                                            .setTimeout(1000 * 10)
-                                            .setMultipartFile(path, f.getName(), f)
-                                            .asString()
-                                            .setCallback(this);
                                     que.remove(0);
+                                    AutoTagGenerator.autoTagGenerate(tmp.context, tmp.path);
                                 }
-                                else {
-                                    AutoTagGenerator.limit++;
-                                }
+                                return;
                             }
                             try {
                                 JSONObject jsonObject = new JSONObject(result);
@@ -76,9 +68,9 @@ public class AutoTagGenerator {
                                     Log.v("Json", jsonObject.get("tag" + i).toString());
                                     Log.v("Json", jsonObject.get("probability" + i).toString());
                                     Log.v("Json", jsonObject.get("probability" + i).toString());
-                                    tagDBManager.insertImage(jsonObject.get("path").toString());
                                     tagDBManager.insertTag(jsonObject.get("path").toString(), jsonObject.get("tag" + i).toString(), TagDBManager.NORMAL_TAG);
                                 }
+                                tagDBManager.makeTrueTagGenerated(jsonObject.get("path").toString());
 
                                 ArrayList<String> test = tagDBManager.getAllImages();
                                 Log.v("generater add image", "image num : " + test.size());
@@ -86,6 +78,7 @@ public class AutoTagGenerator {
                                 Log.v("generater add tag", "tag num : " + test.size());
                                 if(que.size() > 0){
                                     WaitSlot tmp = que.get(0);
+                                    que.remove(0);
                                     String path = tmp.path;
                                     File f = new File(path);
                                     Ion.with(tmp.context)
@@ -94,7 +87,6 @@ public class AutoTagGenerator {
                                             .setMultipartFile(path, f.getName(), f)
                                             .asString()
                                             .setCallback(this);
-                                    que.remove(0);
                                 }
                                 else {
                                     AutoTagGenerator.limit++;
@@ -102,20 +94,11 @@ public class AutoTagGenerator {
 
                             } catch (Exception ex) {
                                 Log.v("exception", ex.toString());
+                                AutoTagGenerator.limit++;
                                 if(que.size() > 0){
                                     WaitSlot tmp = que.get(0);
-                                    String path = tmp.path;
-                                    File f = new File(path);
-                                    Ion.with(tmp.context)
-                                            .load("http://165.194.104.17:8080/upload") //server ip
-                                            .setTimeout(1000 * 10)
-                                            .setMultipartFile(path, f.getName(), f)
-                                            .asString()
-                                            .setCallback(this);
                                     que.remove(0);
-                                }
-                                else {
-                                    AutoTagGenerator.limit++;
+                                    AutoTagGenerator.autoTagGenerate(tmp.context, tmp.path);
                                 }
                             }
                         }
