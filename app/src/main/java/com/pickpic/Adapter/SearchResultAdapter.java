@@ -37,7 +37,7 @@ public class SearchResultAdapter extends BaseAdapter{
         iconImageView.setScaleType(ImageView.ScaleType.FIT_XY);
         GridViewItem searchResultItem = gridViewItem.get(position);
 
-        iconImageView.setImageBitmap(searchResultItem.getThumbnail());
+       // iconImageView.setImageBitmap(searchResultItem.getThumbnail());
 
         return convertView;
     }

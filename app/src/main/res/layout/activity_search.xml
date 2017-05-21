@@ -7,56 +7,35 @@
     tools:context="com.pickpic.Activity.SearchActivity"
     android:orientation="vertical">
 
-
-
-    <android.support.v7.widget.SearchView
-        android:id="@+id/search"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="42dp"
+        android:background="@color/colorToolbar"
+        android:elevation="4dp">
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button Example"/>
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="Write the tag you want to find"
+            android:background="@null"
+            android:maxLines="1" />
+
+        <ImageButton
+            android:id="@+id/button1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_search_black_24dp"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right"
+            />
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <!--search bar
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="changefragment"
-        android:onClick="selectFrag"
-        />
--->
-
-
-
-
-
-
-
-    <!--fragment1(recommandTagListFragment)
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_place"
-        android:name="com.pickpic.Fragment.RecommendTagListFragment"
-        tools:layout="@layout/activity_search" />
--->
-
-<!--
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchresultfragment"
-        android:name="com.pickpic.Fragment.SearchResultFragment"
-        tools:layout="@layout/search_result_item" />
--->
 
 </LinearLayout>
