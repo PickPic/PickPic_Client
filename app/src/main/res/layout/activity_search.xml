@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pickpic.Activity.SearchActivity">
+    tools:context="com.pickpic.Activity.SearchActivity"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/colorToolbar"
+        android:elevation="4dp">
+
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="Write the tag you want to find"
+            android:background="@null"
+            android:maxLines="1" />
+
+        <ImageButton
+            android:id="@+id/button1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_search_black_24dp"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
