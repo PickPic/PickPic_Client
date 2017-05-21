@@ -137,7 +137,7 @@ public class TagDBManager {
             return getAllTags();
         }
         String concatenatedTag = "";
-        String sql = "SELECT DISTINC tagValue where path = (SELECT DISTINCT path FROM IMAGE_TAG_RELATION where tagValue IN(";
+        String sql = "SELECT DISTINCT tagValue From IMAGE_TAG_RELATION where path IN (SELECT DISTINCT path FROM IMAGE_TAG_RELATION where tagValue IN(";
         for(int i = 0; i<tags.size(); i++){
             if(i > 0){
                 concatenatedTag = concatenatedTag + ", ";
@@ -179,7 +179,7 @@ public class TagDBManager {
         return results;
     }
     public ArrayList<String> getTagsByTag(String tag){
-        String sql = "SELECT tagValue IMAGE_TAG_RELATION where tagValue = \"%" + tag + "%\";";
+        String sql = "SELECT tagValue FROM IMAGE_TAG_RELATION where tagValue LIKE \"%" + tag + "%\";";
         ArrayList<String> results = new ArrayList<>();
         Cursor a = db.rawQuery(sql, null);
         while(a.moveToNext()){
