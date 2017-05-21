@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchresultfragment"
         android:name="com.pickpic.Fragment.SearchResultFragment"
-        tools:layout="@layout/fragment_search_result_item" />
+        tools:layout="@layout/search_result_item" />
 -->
 
 </LinearLayout>

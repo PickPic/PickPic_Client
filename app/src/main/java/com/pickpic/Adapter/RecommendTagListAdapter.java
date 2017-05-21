@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.pickpic.Item.RecommendTagListItem;
@@ -62,6 +63,8 @@ public class RecommendTagListAdapter extends BaseAdapter{
     public Object getItem(int position) {
         return recommendTagItemList.get(position);
     }
+
+
 
 
 
