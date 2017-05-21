@@ -4,6 +4,7 @@ package com.pickpic.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pickpic.Activity.GalleryActivity;
 import com.pickpic.Activity.SearchActivity;
 import com.pickpic.Adapter.TimeTabGridViewAdaptor;
 import com.pickpic.Backend.LocalImageManager;
@@ -40,18 +42,24 @@ public class TimeTabFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.time_tab_fragment, container, false);
         TimeTabGridViewAdaptor adaptor = new TimeTabGridViewAdaptor();
-        GridView gridView = (GridView) view.findViewById(R.id.time_tab_gridview);
+        final GridView gridView = (GridView) view.findViewById(R.id.time_tab_gridview);
 
         inflater.inflate(R.layout.time_tab_fragment, container, false);
         gridView.setAdapter(adaptor);
 
         LocalImageManager.getTimeTabGridViewItemList(getContext(),adaptor);
 
+        final ArrayList<String> imagepath = LocalImageManager.getAllImagePath(getContext(), "DESC");
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){
-                Toast.makeText(getContext(), "GridView clicked", Toast.LENGTH_SHORT).show();
+                String selectedimage = imagepath.get(position);
+
+                Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                intent.putExtra("filepath", selectedimage);
+                startActivity(intent);
+
             }
         });
         return view;

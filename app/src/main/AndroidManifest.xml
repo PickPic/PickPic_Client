@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.SearchActivity" />
+        <activity android:name=".Activity.GalleryActivity" />
         <activity android:name=".Activity.ServiceCenterActivity" />
     </application>
 
