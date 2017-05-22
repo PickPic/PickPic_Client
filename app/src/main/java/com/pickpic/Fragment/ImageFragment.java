@@ -1,6 +1,5 @@
 package com.pickpic.Fragment;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.pickpic.R;
-
-import java.io.File;
 
 /**
  * Created by yewon on 2017-05-09.

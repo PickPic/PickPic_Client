@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,7 +24,9 @@ import static android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 public class GalleryActivity extends AppCompatActivity {
 
     int touch = 1;
+    String filepath;
     ImageFragment imageFragment;
+    TagFragment tagFragment;
     ImageButton back;
     ImageButton menu;
 
@@ -35,9 +36,10 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         Intent intent = getIntent();
-        String filepath = intent.getStringExtra("filepath");
+        filepath = intent.getStringExtra("filepath");
 
         imageFragment = new ImageFragment(filepath);
+        tagFragment = new TagFragment(filepath);
 
         //button above
         back = (ImageButton)findViewById(R.id.backBtn);
@@ -69,7 +71,7 @@ public class GalleryActivity extends AppCompatActivity {
                 break;
             }
             case 0: {
-                fragment = new TagFragment();   //태그 추가한 것에 대해서 갱신이 안되면 수정하기
+                fragment = new TagFragment(filepath);   //태그 추가한 것에 대해서 갱신이 안되면 수정하기
                 break;
             }
         }
