@@ -2,6 +2,7 @@ package com.pickpic.Fragment;
 
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -40,9 +41,8 @@ public class TimeTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.time_tab_fragment, container, false);
-        TimeTabGridViewAdaptor adaptor = new TimeTabGridViewAdaptor();
         final GridView gridView = (GridView) view.findViewById(R.id.time_tab_gridview);
-
+        TimeTabGridViewAdaptor adaptor = new TimeTabGridViewAdaptor(gridView, BitmapFactory.decodeResource(getResources(), R.drawable.blank));
         inflater.inflate(R.layout.time_tab_fragment, container, false);
         gridView.setAdapter(adaptor);
 

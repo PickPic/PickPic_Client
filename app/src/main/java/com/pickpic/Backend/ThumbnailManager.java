@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 /**
@@ -15,11 +16,13 @@ public class ThumbnailManager extends AsyncTask<Void, Void, Bitmap> {
     private long id;
     private Context context;
 
-    public ThumbnailManager(ImageView imageView, long id, Context context){
+    public ThumbnailManager(ImageView imageView, long id, Context context) {
         this.imageView = imageView;
         this.id = id;
         this.context = context;
     }
+
+
     protected Bitmap doInBackground(Void... voids) {
         return MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(), id, MediaStore.Images.Thumbnails.MICRO_KIND, null);
     }
