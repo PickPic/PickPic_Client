@@ -2,8 +2,8 @@ package com.pickpic.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.pickpic.Backend.ThumbnailManager;
 import com.pickpic.Item.GridViewItem;
 import com.pickpic.R;
 
@@ -24,6 +23,7 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
     private GridView gridView;
     private int gridViewScrollState = 0;
     private Bitmap bitmap;
+
     @Override
     public int getCount() {
         return gridViewItems.size();
@@ -36,10 +36,11 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 gridViewScrollState = scrollState;
-                if(AbsListView.OnScrollListener.SCROLL_STATE_IDLE == scrollState) {
+                if (AbsListView.OnScrollListener.SCROLL_STATE_IDLE == scrollState) {
                     gridView.invalidateViews();
                 }
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
@@ -64,10 +65,15 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
 
         GridViewItem gridViewItem = gridViewItems.get(position);
 
-        if(gridViewScrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE)
-            new ThumbnailManager(imageView, gridViewItem.getThumbnail(), parent.getContext()).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        else
+        if (gridViewScrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+            new TimeTabGridViewThumbnailManager(imageView, gridViewItem.getThumbnail(), parent.getContext(), gridView, position).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        } else if (gridViewScrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
             imageView.setImageBitmap(bitmap);
+            new TimeTabGridViewThumbnailManager(imageView, gridViewItem.getThumbnail(), parent.getContext(), gridView, position).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        } else {
+            imageView.setImageBitmap(bitmap);
+
+        }
         return convertView;
     }
 
@@ -83,4 +89,31 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
         gridViewItems.add(item);
     }
 
+}
+
+class TimeTabGridViewThumbnailManager extends AsyncTask<Void, Void, Bitmap> {
+    private ImageView imageView;
+    private long id;
+    private Context context;
+    private GridView gridView;
+    private int position = -1;
+
+    public TimeTabGridViewThumbnailManager(ImageView imageView, long id, Context context, GridView gridView, int position) {
+        this.imageView = imageView;
+        this.id = id;
+        this.context = context;
+        this.gridView = gridView;
+        this.position = position;
+    }
+    protected Bitmap doInBackground(Void... voids) {
+        return MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(), id, MediaStore.Images.Thumbnails.MICRO_KIND, null);
+    }
+
+    protected void onProgressUpdate() {
+    }
+
+    protected void onPostExecute(Bitmap bitmap) {
+        if (gridView.getFirstVisiblePosition() <= position && gridView.getFirstVisiblePosition() + 30 > position)
+            imageView.setImageBitmap(bitmap);
+    }
 }
