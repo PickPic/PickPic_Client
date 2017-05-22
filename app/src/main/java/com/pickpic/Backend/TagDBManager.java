@@ -229,7 +229,7 @@ public class TagDBManager {
     }
 
     public void removeTag(String path, String tag) {
-        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE path = " + path + "AND tagValue = " + "tag");
+        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE path = " + "\"" + path + "\"" + "AND tagValue = " + "\"" + tag + "\"");
     }
 /*
     // 데이터 갱신
