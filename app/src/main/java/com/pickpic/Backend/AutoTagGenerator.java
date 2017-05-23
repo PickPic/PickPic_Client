@@ -66,8 +66,6 @@ public class AutoTagGenerator {
                                 TagDBManager tagDBManager = new TagDBManager(context);
                                 for (int i = 0; i < size; i++) {
                                     Log.v("Json", jsonObject.get("tag" + i).toString());
-                                    Log.v("Json", jsonObject.get("probability" + i).toString());
-                                    Log.v("Json", jsonObject.get("probability" + i).toString());
                                     tagDBManager.insertTag(jsonObject.get("path").toString(), jsonObject.get("tag" + i).toString(), TagDBManager.NORMAL_TAG);
                                 }
                                 tagDBManager.makeTrueTagGenerated(jsonObject.get("path").toString());
