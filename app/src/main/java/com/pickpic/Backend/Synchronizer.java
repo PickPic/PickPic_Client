@@ -33,7 +33,6 @@ public class Synchronizer extends AsyncTask<Void, Void, Void> {
     }
 
     protected Void doInBackground(Void... voids) {
-
         TagDBManager tagDBManager = new TagDBManager(context);
         ArrayList<String> sync = tagDBManager.getAllTags();
         Log.v("sync before", "tag num : " + sync.size());
@@ -41,7 +40,7 @@ public class Synchronizer extends AsyncTask<Void, Void, Void> {
         Log.v("sync before", "image num : " + sync.size());
 
         Log.v("test", "start synchronizer");
-        ArrayList<String> localImages = LocalImageManager.getAllImagePath(context, "ASC");
+        ArrayList<String> localImages = LocalImageManager.getAllImagePath(context, "DESC");
         ArrayList<String> toBeErasedPath = tagDBManager.getToBeErasedPaths(localImages);
         for (int i = 0; i < toBeErasedPath.size(); i++) {
             tagDBManager.removeImage(toBeErasedPath.get(i));

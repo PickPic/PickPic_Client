@@ -106,7 +106,15 @@ public class TagDBManager {
         return results;
     }
     public void insertImagesIfNotExist(ArrayList<String> paths){
-        for(int i = 0; i<paths.size(); i++){
+        ArrayList<String> inserted = getAllImages();
+        int i;
+        for(i = 0; i<paths.size(); i++){
+            if(inserted.size() > 0 && paths.get(i).equals(inserted.get(inserted.size()-1))){
+                break;
+            }
+        }
+        i--;
+        for(; i>-1; i--){
             insertImage(paths.get(i));
             Log.v("test", "" + i + " : " + paths.get(i));
         }
