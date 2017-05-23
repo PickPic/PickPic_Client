@@ -72,7 +72,6 @@ public class TagFragment extends Fragment {
         @Override
         public void onClick(View v) {
             tagInputDialog();
-            tagListAdapter.notifyDataSetChanged();
         }
     };
 
@@ -90,6 +89,7 @@ public class TagFragment extends Fragment {
                 String temp = tag.getText().toString();
                 (new TagDBManager(getContext())).insertTag(imagefilepath, temp, TagDBManager.NORMAL_TAG);
                 tagListItems.add(new TagListItem(temp));
+                tagListAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });
