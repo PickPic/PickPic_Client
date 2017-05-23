@@ -67,4 +67,5 @@ dependencies {
     compile 'com.koushikdutta.ion:ion:2.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+    compile 'com.github.chrisbanes.photoview:library:1.2.3'
 }
