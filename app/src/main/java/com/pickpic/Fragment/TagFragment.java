@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.pickpic.Adapter.TagListAdapter;
+import com.pickpic.Backend.TagDBManager;
 import com.pickpic.Item.TagListItem;
 import com.pickpic.R;
 
@@ -27,7 +28,12 @@ public class TagFragment extends Fragment {
     ListView tagView;
     TagListAdapter tagListAdapter;
     ArrayList<TagListItem> tagListItems;
-    ImageButton addtag;
+    ImageButton addTag;
+    String imageFilePath;
+
+    public TagFragment(String filepath) {
+        this.imageFilePath = filepath;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,17 +46,22 @@ public class TagFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tag,container,false);
 
-        addtag = (ImageButton)view.findViewById(R.id.addTagBtn);
-        addtag.setOnClickListener(addTagListener);
+        addTag = (ImageButton)view.findViewById(R.id.addTagBtn);
+        addTag.setOnClickListener(addTagListener);
 
-        tagView = (ListView)view.findViewById(R.id.taglist);
+        tagView = (ListView)view.findViewById(R.id.tagList);
         tagListItems = new ArrayList<TagListItem>();
 
-        //임시, db에서 가져오는 부분, 삭제 제대로 되는지 확인하기
-        tagListItems.add(new TagListItem("태그"));
-        tagListItems.add(new TagListItem("태그"));
+        ArrayList<String> getTags = (new TagDBManager(getContext())).getTagsByPath(imageFilePath);
+        if(getTags.size() == 0) {
+            tagListItems.add(new TagListItem("no tags"));
+        } else {
+            for (int i = 0; i < getTags.size(); i++) {
+                tagListItems.add(new TagListItem(getTags.get(i)));
+            }
+        }
 
-        tagListAdapter = new TagListAdapter(this.getContext(), tagListItems);
+        tagListAdapter = new TagListAdapter(this.getContext(), tagListItems, imageFilePath);
         tagView.setAdapter(tagListAdapter);
 
         return view;
@@ -61,7 +72,6 @@ public class TagFragment extends Fragment {
         @Override
         public void onClick(View v) {
             tagInputDialog();
-            tagListAdapter.notifyDataSetChanged();
         }
     };
 
@@ -77,8 +87,9 @@ public class TagFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String temp = tag.getText().toString();
-                //db에 태그 보내기
+                (new TagDBManager(getContext())).insertTag(imageFilePath, temp, TagDBManager.NORMAL_TAG);
                 tagListItems.add(new TagListItem(temp));
+                tagListAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });
