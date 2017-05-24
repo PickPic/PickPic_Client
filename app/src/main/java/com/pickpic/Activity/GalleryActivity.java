@@ -53,7 +53,6 @@ public class GalleryActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame, imageFragment);
         fragmentTransaction.commit();
-
     }
 
     public void ChangeFragment(View v) {
