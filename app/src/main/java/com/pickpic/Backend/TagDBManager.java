@@ -140,7 +140,7 @@ public class TagDBManager {
         a.close();
         return results;
     }
-    public ArrayList<String> getAllTags(ArrayList<String> tags) {
+    public ArrayList<String> getAvailableTag(ArrayList<String> tags) {
         if(tags == null){
             return getAllTags();
         }
@@ -186,7 +186,7 @@ public class TagDBManager {
         a.close();
         return results;
     }
-    public ArrayList<String> getTagsByTag(String tag){
+    public ArrayList<String> getSimilarTag(String tag){
         String sql = "SELECT tagValue FROM IMAGE_TAG_RELATION where tagValue LIKE \"%" + tag + "%\";";
         ArrayList<String> results = new ArrayList<>();
         Cursor a = db.rawQuery(sql, null);
