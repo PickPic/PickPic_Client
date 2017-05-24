@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pickpic.Backend.TagDBManager;
 import com.pickpic.Item.TagListItem;
 import com.pickpic.R;
 
@@ -24,13 +25,14 @@ public class TagListAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<TagListItem> tagListItemArrayList;
-
+    String imagefilepath;
     TextView tag_name;
     ImageButton deletetag;
 
-    public TagListAdapter(Context context, ArrayList<TagListItem> tagListItemArrayList) {
+    public TagListAdapter(Context context, ArrayList<TagListItem> tagListItemArrayList, String filepath) {
         this.context = context;
         this.tagListItemArrayList = tagListItemArrayList;
+        this.imagefilepath = filepath;
     }
 
     @Override
@@ -63,15 +65,17 @@ public class TagListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
+                final String selectedtag = tagListItemArrayList.get(deletekey).getTag();
+
                 AlertDialog.Builder tagdelete = new AlertDialog.Builder(finalConvertView.getContext());
                 tagdelete.setTitle("Delete tag");
-                tagdelete.setMessage("Are you sure?");
+                tagdelete.setMessage(imagefilepath + "\n" + "Really want to delete " + selectedtag + "?");
 
                 tagdelete.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //db로 보내기
                         tagListItemArrayList.remove(deletekey);
+                        (new TagDBManager(context)).removeTag(imagefilepath, selectedtag);
                         dialog.dismiss();
                         notifyDataSetChanged();
                     }

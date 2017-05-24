@@ -45,6 +45,16 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="menuClick"
             android:src="@drawable/gallery_more" />
+
+        <ImageButton
+            android:id="@+id/changeBtn"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/menuBtn"
+            android:layout_toStartOf="@+id/menuBtn"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/gallery_change" />
     </RelativeLayout>
 
     <FrameLayout
@@ -66,7 +76,8 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1">
+        tools:layout_constraintTop_creator="1" >
+
 
     </FrameLayout>
 

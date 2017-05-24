@@ -5,15 +5,16 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <ListView
-        android:id="@+id/taglist"
-        android:layout_width="match_parent"
-        android:layout_height="515dp" />
-
     <ImageButton
         android:id="@+id/addTagBtn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/gallery_add" />
+
+    <ListView
+        android:id="@+id/tagList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
