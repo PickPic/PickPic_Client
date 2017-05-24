@@ -1,19 +1,15 @@
 package com.pickpic.Fragment;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.pickpic.R;
 
@@ -26,12 +22,12 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class ImageFragment extends Fragment{
 
     ImageView imageView;
-    String imagefilepath;
+    String imageFilePath;
     int degree;
     PhotoViewAttacher photoViewAttacher;
 
     public ImageFragment(String filepath) {
-        this.imagefilepath = filepath;
+        this.imageFilePath = filepath;
     }
 
     @Override
@@ -47,9 +43,9 @@ public class ImageFragment extends Fragment{
 
         degree = 0;
 
-        imageView = (ImageView)view.findViewById(R.id.imageview);
+        imageView = (ImageView)view.findViewById(R.id.imageView);
         photoViewAttacher = new PhotoViewAttacher(imageView);
-        imageView.setImageBitmap(BitmapFactory.decodeFile(imagefilepath));
+        imageView.setImageBitmap(BitmapFactory.decodeFile(imageFilePath));
 
         return view;
     }
@@ -57,7 +53,7 @@ public class ImageFragment extends Fragment{
     public void rotateImage() {
         degree = (degree + 90) % 360;
 
-        rotateImage(BitmapFactory.decodeFile(imagefilepath), degree);
+        rotateImage(BitmapFactory.decodeFile(imageFilePath), degree);
     }
 
     private void rotateImage(Bitmap src, float degree) {

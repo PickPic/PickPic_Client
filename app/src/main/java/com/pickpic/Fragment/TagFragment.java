@@ -28,11 +28,11 @@ public class TagFragment extends Fragment {
     ListView tagView;
     TagListAdapter tagListAdapter;
     ArrayList<TagListItem> tagListItems;
-    ImageButton addtag;
-    String imagefilepath;
+    ImageButton addTag;
+    String imageFilePath;
 
     public TagFragment(String filepath) {
-        this.imagefilepath = filepath;
+        this.imageFilePath = filepath;
     }
 
     @Override
@@ -46,13 +46,13 @@ public class TagFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tag,container,false);
 
-        addtag = (ImageButton)view.findViewById(R.id.addTagBtn);
-        addtag.setOnClickListener(addTagListener);
+        addTag = (ImageButton)view.findViewById(R.id.addTagBtn);
+        addTag.setOnClickListener(addTagListener);
 
-        tagView = (ListView)view.findViewById(R.id.taglist);
+        tagView = (ListView)view.findViewById(R.id.tagList);
         tagListItems = new ArrayList<TagListItem>();
 
-        ArrayList<String> getTags = (new TagDBManager(getContext())).getTagsByPath(imagefilepath);
+        ArrayList<String> getTags = (new TagDBManager(getContext())).getTagsByPath(imageFilePath);
         if(getTags.size() == 0) {
             tagListItems.add(new TagListItem("no tags"));
         } else {
@@ -61,7 +61,7 @@ public class TagFragment extends Fragment {
             }
         }
 
-        tagListAdapter = new TagListAdapter(this.getContext(), tagListItems, imagefilepath);
+        tagListAdapter = new TagListAdapter(this.getContext(), tagListItems, imageFilePath);
         tagView.setAdapter(tagListAdapter);
 
         return view;
@@ -87,7 +87,7 @@ public class TagFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String temp = tag.getText().toString();
-                (new TagDBManager(getContext())).insertTag(imagefilepath, temp, TagDBManager.NORMAL_TAG);
+                (new TagDBManager(getContext())).insertTag(imageFilePath, temp, TagDBManager.NORMAL_TAG);
                 tagListItems.add(new TagListItem(temp));
                 tagListAdapter.notifyDataSetChanged();
                 dialog.dismiss();
