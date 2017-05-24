@@ -32,8 +32,15 @@ import java.util.ArrayList;
 public class SearchActivity extends AppCompatActivity {
 
 
+    //입력받은 스트링 가져오기
+    EditText inputString;
+
     public SearchActivity(){
 
+    }
+
+    public String getData(){
+        return inputString.getText().toString();
     }
 
     private boolean isRecommendTagList = true;
@@ -46,6 +53,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         final TagDBManager tagDBManager = new TagDBManager(this);
+        inputString = (EditText) findViewById(R.id.inputText) ;
 
         FrameLayout frameLayout;
         frameLayout = (FrameLayout)findViewById(R.id.frame);
@@ -62,15 +70,11 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){//버튼이 눌리면 searchresult로 fragment변경
 
-                //입력받은 스트링 가져오기
-                EditText inputString = (EditText) findViewById(R.id.inputText) ;
-                String inputTag = inputString.getText().toString() ;
+
+                Log.v("searched Tag:", getData());    //검색된 검색어 출력해보기
 
 
-                Log.v("searched Tag:", inputTag);    //검색된 검색어 출력해보기
-
-
-                if(!(inputTag.isEmpty())){ //아무 스트링도 입력하지 않으면 실행 안함
+                if(!(getData().isEmpty())){ //아무 스트링도 입력하지 않으면 실행 안함
 
                     SearchResultFragment searchResultFragment = new SearchResultFragment();
                     FragmentManager fm = getSupportFragmentManager();
