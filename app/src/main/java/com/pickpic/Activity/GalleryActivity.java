@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,9 +24,12 @@ import static android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 public class GalleryActivity extends AppCompatActivity {
 
     int touch = 1;
+    String filepath;
     ImageFragment imageFragment;
+    TagFragment tagFragment;
     ImageButton back;
     ImageButton menu;
+    ImageButton change;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +37,22 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         Intent intent = getIntent();
-        String filepath = intent.getStringExtra("filepath");
+        filepath = intent.getStringExtra("filepath");
 
         imageFragment = new ImageFragment(filepath);
+        tagFragment = new TagFragment(filepath);
 
         //button above
         back = (ImageButton)findViewById(R.id.backBtn);
         back.setOnClickListener(backActionListener);
         menu = (ImageButton)findViewById(R.id.menuBtn);
-
-        //image screen, tag screen change
-        FrameLayout frameLayout;
-        frameLayout = (FrameLayout)findViewById(R.id.frame);
-        frameLayout.setOnTouchListener(screentouchListener);
+        change = (ImageButton)findViewById(R.id.changeBtn);
+        change.setOnClickListener(changeClickListener);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame, imageFragment);
         fragmentTransaction.commit();
-
     }
 
     public void ChangeFragment(View v) {
@@ -69,7 +68,7 @@ public class GalleryActivity extends AppCompatActivity {
                 break;
             }
             case 0: {
-                fragment = new TagFragment();   //태그 추가한 것에 대해서 갱신이 안되면 수정하기
+                fragment = new TagFragment(filepath);
                 break;
             }
         }
@@ -104,26 +103,12 @@ public class GalleryActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnTouchListener screentouchListener = new View.OnTouchListener() {
+    private View.OnClickListener changeClickListener = new View.OnClickListener(){
 
         @Override
-        public boolean onTouch(View v, MotionEvent event) {
-
-            switch(event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    touch++;
-                    ChangeFragment(v);
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                    break;
-                case MotionEvent.ACTION_UP: {
-                    break;
-                }
-                default:
-                    break;
-            }
-
-            return false;
+        public void onClick(View v) {
+            touch++;
+            ChangeFragment(v);
         }
     };
 
@@ -144,6 +129,9 @@ public class GalleryActivity extends AppCompatActivity {
                 case R.id.share:
                     Toast toast1 = Toast.makeText(getApplicationContext(), "Sharing", Toast.LENGTH_SHORT);
                     toast1.show();
+                    break;
+                case R.id.rotate:
+                    imageFragment.rotateImage();
                     break;
                 case R.id.info:
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Show more information", Toast.LENGTH_SHORT);

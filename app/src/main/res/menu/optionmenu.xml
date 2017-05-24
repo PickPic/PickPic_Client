@@ -2,12 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/share"
-        android:title="Share" />
+        android:title="Share"/>
+
+    <item android:id="@+id/rotate"
+        android:title="Rotate"/>
 
     <item android:id="@+id/info"
-        android:title="More information" />
+        android:title="More information"/>
 
     <item android:id="@+id/delete"
-         android:title="Delete" />
+        android:title="Delete" />
 
 </menu>

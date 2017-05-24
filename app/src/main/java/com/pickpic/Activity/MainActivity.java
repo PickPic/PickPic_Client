@@ -87,20 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TagDBManager tagDBManager = new TagDBManager(this);
-
-        ArrayList<String> sync =  tagDBManager.getAllTags();
-        Log.v("sync before", "tag num : "+sync.size());
-        sync = tagDBManager.getAllImages();
-        Log.v("sync before", "image num : "+sync.size());
-
-    //    tagDBManager.initTable();
-        Synchronizer.synchronize(this);
-
-        sync =  tagDBManager.getAllTags();
-        Log.v("sync after", "tag num : "+sync.size());
-        sync = tagDBManager.getAllImages();
-        Log.v("sync after", "image num : "+sync.size());
+        new Synchronizer(this).execute();
     }
 
     public  void search_btn(View view){
@@ -117,23 +104,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menu){
                 switch (menu.getItemId()){
                     case R.id.syncMenu:
-                        /*
-                        TagDBManager tagDBManager = new TagDBManager(MainActivity.this);
 
-                        ArrayList<String> sync =  tagDBManager.getAllTags();
-                        Log.v("sync before", "tag num : "+sync.size());
-                        sync = tagDBManager.getAllImages();
-                        Log.v("sync before", "image num : "+sync.size());
-
-                        Syncronizer.synchronize(MainActivity.this);
-
-                        sync =  tagDBManager.getAllTags();
-                        Log.v("sync after", "tag num : "+sync.size());
-                        sync = tagDBManager.getAllImages();
-                        Log.v("sync after", "image num : "+sync.size()); */
+                        new Synchronizer(getApplicationContext()).execute();
                         Toast.makeText(getApplicationContext(),"synchronize is completed.",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.howToUseMenu:
+
                         Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(intent2);
                         break;
@@ -149,4 +125,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-

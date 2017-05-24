@@ -106,7 +106,15 @@ public class TagDBManager {
         return results;
     }
     public void insertImagesIfNotExist(ArrayList<String> paths){
-        for(int i = 0; i<paths.size(); i++){
+        ArrayList<String> inserted = getAllImages();
+        int i;
+        for(i = 0; i<paths.size(); i++){
+            if(inserted.size() > 0 && paths.get(i).equals(inserted.get(inserted.size()-1))){
+                break;
+            }
+        }
+        i--;
+        for(; i>-1; i--){
             insertImage(paths.get(i));
             Log.v("test", "" + i + " : " + paths.get(i));
         }
@@ -132,27 +140,7 @@ public class TagDBManager {
         a.close();
         return results;
     }
-    public ArrayList<String> getAllTags(ArrayList<String> tags) {
-        if(tags == null){
-            return getAllTags();
-        }
-        String concatenatedTag = "";
-        String sql = "SELECT DISTINCT tagValue From IMAGE_TAG_RELATION where path IN (SELECT DISTINCT path FROM IMAGE_TAG_RELATION where tagValue IN(";
-        for(int i = 0; i<tags.size(); i++){
-            if(i > 0){
-                concatenatedTag = concatenatedTag + ", ";
-            }
-            concatenatedTag = concatenatedTag + "\'" + tags.get(i) + "\'";
-        }
-        sql = sql + concatenatedTag + ")) AND tagValue NOT IN(" + concatenatedTag + ");";
-        Cursor a = db.rawQuery(sql, null);
-        ArrayList<String> results = new ArrayList<String>();
-        while (a.moveToNext()) {
-            results.add(a.getString(0));
-        }
-        a.close();
-        return results;
-    }
+
     public ArrayList<TagTabListViewItem> getTagTabListViewItem(){
         String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION where tagType = " + "\'" + TagDBManager.NORMAL_TAG + "\';";
         Cursor a = db.rawQuery(sql, null);
@@ -178,8 +166,31 @@ public class TagDBManager {
         a.close();
         return results;
     }
-    public ArrayList<String> getTagsByTag(String tag){
-        String sql = "SELECT tagValue FROM IMAGE_TAG_RELATION where tagValue LIKE \"%" + tag + "%\";";
+    public ArrayList<String> getRecommendTagList(ArrayList<String> inputedTag, String inputingString){
+        String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION";
+        boolean inputTagIsNull = true;
+        if(inputedTag != null){
+            String concatenatedTag = "";
+            inputTagIsNull = false;
+            sql = sql + " where path IN (SELECT path FROM IMAGE_TAG_RELATION WHERE tagValue IN(";
+            for(int i = 0; i<inputedTag.size(); i++){
+                if(i != 0){
+                    concatenatedTag = concatenatedTag + ", ";
+                }
+                concatenatedTag = concatenatedTag + "\""+inputedTag.get(i)+ "\"";
+            }
+            sql = sql + concatenatedTag+ ") GROUP BY path HAVING COUNT(*) = "+inputedTag.size() + ") AND tagValue NOT IN("+concatenatedTag + ")";
+        }
+        if(inputingString != null){
+            if(inputTagIsNull){
+                sql = sql + " WHERE";
+            }
+            else{
+                sql = sql + " AND";
+            }
+            sql = sql + " tagValue LIKE \"%" + inputingString + "%\"";
+        }
+        sql = sql + ";";
         ArrayList<String> results = new ArrayList<>();
         Cursor a = db.rawQuery(sql, null);
         while(a.moveToNext()){
@@ -229,7 +240,7 @@ public class TagDBManager {
     }
 
     public void removeTag(String path, String tag) {
-        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE path = " + path + "AND tagValue = " + "tag");
+        db.execSQL("DELETE FROM IMAGE_TAG_RELATION WHERE path = " + "\"" + path + "\"" + "AND tagValue = " + "\"" + tag + "\"");
     }
 /*
     // 데이터 갱신
