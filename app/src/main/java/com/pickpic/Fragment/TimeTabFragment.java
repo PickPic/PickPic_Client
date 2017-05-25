@@ -46,7 +46,9 @@ public class TimeTabFragment extends Fragment {
         inflater.inflate(R.layout.time_tab_fragment, container, false);
         gridView.setAdapter(adaptor);
 
-        LocalImageManager.getTimeTabGridViewItemList(getContext(),adaptor);
+        ArrayList<GridViewItem>  gridViewItems = LocalImageManager.getTimeTabGridViewItemList(getContext());
+        for(int i = 0;i < gridViewItems.size(); i++)
+            adaptor.addItem(gridViewItems.get(i));
 
         final ArrayList<String> imagepath = LocalImageManager.getAllImagePath(getContext(), "DESC");
 

@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         new Synchronizer(this).execute();
     }
 
     public  void search_btn(View view){
         Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra("bucket","");
         startActivity(intent);
     }
 

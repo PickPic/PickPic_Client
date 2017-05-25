@@ -22,6 +22,7 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
     private ArrayList<GridViewItem> gridViewItems = new ArrayList<GridViewItem>();
     private GridView gridView;
     private int gridViewScrollState = 0;
+    private int beforeGridViewScrollState = 0;
     private Bitmap bitmap;
 
     @Override
@@ -35,9 +36,11 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
         gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                beforeGridViewScrollState = gridViewScrollState;
                 gridViewScrollState = scrollState;
                 if (AbsListView.OnScrollListener.SCROLL_STATE_IDLE == scrollState) {
-                    gridView.invalidateViews();
+                    if(AbsListView.OnScrollListener.SCROLL_STATE_FLING == beforeGridViewScrollState)
+                        gridView.invalidateViews();
                 }
             }
 
@@ -87,6 +90,11 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
 
     public void addItem(GridViewItem item) {
         gridViewItems.add(item);
+        notifyDataSetChanged();
+    }
+    public void setItems(ArrayList<GridViewItem> items){
+        gridViewItems = items;
+        notifyDataSetChanged();
     }
 
 }
@@ -107,9 +115,6 @@ class TimeTabGridViewThumbnailManager extends AsyncTask<Void, Void, Bitmap> {
     }
     protected Bitmap doInBackground(Void... voids) {
         return MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(), id, MediaStore.Images.Thumbnails.MICRO_KIND, null);
-    }
-
-    protected void onProgressUpdate() {
     }
 
     protected void onPostExecute(Bitmap bitmap) {

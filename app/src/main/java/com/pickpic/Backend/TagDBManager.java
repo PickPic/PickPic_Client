@@ -169,17 +169,19 @@ public class TagDBManager {
     public ArrayList<String> getRecommendTagList(ArrayList<String> inputedTag, String inputingString){
         String sql = "SELECT DISTINCT tagValue FROM IMAGE_TAG_RELATION";
         boolean inputTagIsNull = true;
-        if(inputedTag != null){
-            String concatenatedTag = "";
-            inputTagIsNull = false;
-            sql = sql + " where path IN (SELECT path FROM IMAGE_TAG_RELATION WHERE tagValue IN(";
-            for(int i = 0; i<inputedTag.size(); i++){
-                if(i != 0){
-                    concatenatedTag = concatenatedTag + ", ";
+        if(inputedTag != null) {
+            if (inputedTag.size() != 0) {
+                String concatenatedTag = "";
+                inputTagIsNull = false;
+                sql = sql + " where path IN (SELECT path FROM IMAGE_TAG_RELATION WHERE tagValue IN(";
+                for (int i = 0; i < inputedTag.size(); i++) {
+                    if (i != 0) {
+                        concatenatedTag = concatenatedTag + ", ";
+                    }
+                    concatenatedTag = concatenatedTag + "\"" + inputedTag.get(i) + "\"";
                 }
-                concatenatedTag = concatenatedTag + "\""+inputedTag.get(i)+ "\"";
+                sql = sql + concatenatedTag + ") GROUP BY path HAVING COUNT(*) = " + inputedTag.size() + ") AND tagValue NOT IN(" + concatenatedTag + ")";
             }
-            sql = sql + concatenatedTag+ ") GROUP BY path HAVING COUNT(*) = "+inputedTag.size() + ") AND tagValue NOT IN("+concatenatedTag + ")";
         }
         if(inputingString != null){
             if(inputTagIsNull){

@@ -29,8 +29,22 @@ public class LocalImageManager {
         return list;
 
     }
-    public static void getTimeTabGridViewItemList(Context context, TimeTabGridViewAdaptor adaptor){
+    public static String getBucketName(Context context, String bucketId){
+        String bucketName = null;
 
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = {MediaStore.Images.Media.BUCKET_DISPLAY_NAME, MediaStore.Images.Media.BUCKET_ID};
+        String[] selection = {bucketId};
+        Cursor cursor = context.getContentResolver().query(uri, projection, MediaStore.Images.Media.BUCKET_ID + "=?", selection, null);
+        if (cursor.moveToNext()) {
+            int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+            bucketName = cursor.getString(columnIndex);
+        }
+
+        return bucketName;
+    }
+    public static ArrayList<GridViewItem> getTimeTabGridViewItemList(Context context){
+        ArrayList<GridViewItem> gridViewItems = new ArrayList<GridViewItem>();
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID, MediaStore.Images.Media.DATE_ADDED};
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, "DATE_ADDED DESC");
@@ -47,9 +61,10 @@ public class LocalImageManager {
 
                 columnIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
                 gridViewItem.setThumbnail(cursor.getLong(columnIndex));
-                adaptor.addItem(gridViewItem);
+                gridViewItems.add(gridViewItem);
             }
         }
+        return gridViewItems;
     }
     public static String getDateByPath(Context context, String path) {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
