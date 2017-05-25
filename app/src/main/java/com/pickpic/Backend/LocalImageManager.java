@@ -3,11 +3,9 @@ package com.pickpic.Backend;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.pickpic.Adapter.TimeTabGridViewAdaptor;
 import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.Item.GridViewItem;
 
