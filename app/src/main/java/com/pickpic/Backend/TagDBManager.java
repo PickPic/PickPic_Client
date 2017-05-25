@@ -116,6 +116,7 @@ public class TagDBManager {
         i--;
         for(; i>-1; i--){
             insertImage(paths.get(i));
+            insertTag(paths.get(i), LocalImageManager.getDateByPath(context, paths.get(i)), TagDBManager.DATE_TAG);
             Log.v("test", "" + i + " : " + paths.get(i));
         }
     }
@@ -202,27 +203,42 @@ public class TagDBManager {
     }
 
     public ArrayList<String> getPathsByTags(ArrayList<String> tags){
-        String sql = "SELECT * FROM IMAGE_TAG_RELATION where tagValue = \"" + tags.get(0) + "\";";
-        ArrayList<String> results = new ArrayList<String>();
-
-        Cursor a = db.rawQuery(sql, null);
-        ArrayList<String> first = new ArrayList<>();
-        while(a.moveToNext()){
-            first.add(a.getString(0));
-        }
-        a.close();
-        for(int i = 0; i<first.size(); i++){
-            for(int j = 1; j<tags.size(); j++){
-                sql = "SELECT * FROM IMAGE_TAG_RELATION where path = \"" + first.get(i) + "\" AND tagValue = \"" + tags.get(j) + "\";";
-                Cursor b = db.rawQuery(sql,null);
-                if(b.isAfterLast()){
-                    break;
-                }
-                if(j == tags.size() -1){
-                    results.add(first.get(i));
-                }
-                b.close();
+        String concatenatedTag = "";
+        String sql = "SELECT path FROM IMAGE_TAG_RELATION WHERE tagValue IN(";
+        for(int i = 0; i<tags.size(); i++){
+            if(i != 0){
+                concatenatedTag = concatenatedTag + ", ";
             }
+            concatenatedTag = concatenatedTag + "\""+tags.get(i)+ "\"";
+        }
+        sql = sql + concatenatedTag+ ") GROUP BY path HAVING COUNT(*) = "+tags.size() + ";";
+        ArrayList<String> results = new ArrayList<String>();
+        Cursor a = db.rawQuery(sql, null);
+        while(a.moveToNext()){
+            results.add(a.getString(0));
+        }
+        return results;
+    }
+
+    public ArrayList<String> getPathsByTags(ArrayList<String> tags, String dirTag){
+        String concatenatedTag = "";
+        String sql = "SELECT path FROM IMAGE_TAG_RELATION WHERE tagValue IN(";
+        for(int i = 0; i<tags.size(); i++){
+            if(i != 0){
+                concatenatedTag = concatenatedTag + ", ";
+            }
+            concatenatedTag = concatenatedTag + "\""+tags.get(i)+ "\"";
+        }
+        sql = sql + concatenatedTag+ ")";
+
+        sql = sql + "OR (tagValue = \"" + dirTag+ "\" AND tagType = " + "\'" + TagDBManager.DIRECTORY_TAG + "\')";
+        int tagNum = tags.size() +1;
+        sql = sql +  "GROUP BY path HAVING COUNT(*) = "+tagNum + ";";
+        Log.v("test", sql);
+        ArrayList<String> results = new ArrayList<String>();
+        Cursor a = db.rawQuery(sql, null);
+        while(a.moveToNext()){
+            results.add(a.getString(0));
         }
         return results;
     }
