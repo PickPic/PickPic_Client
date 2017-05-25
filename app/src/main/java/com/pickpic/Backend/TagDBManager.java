@@ -118,6 +118,8 @@ public class TagDBManager {
         for(; i>-1; i--){
             insertImage(paths.get(i));
             insertTag(paths.get(i), LocalImageManager.getDateByPath(context, paths.get(i)), TagDBManager.DATE_TAG);
+            String[] parsed = paths.get(i).split("/");
+            insertTag(paths.get(i), parsed[parsed.length-2], TagDBManager.DATE_TAG);
             Log.v("test", "" + i + " : " + paths.get(i));
         }
     }
@@ -133,7 +135,7 @@ public class TagDBManager {
     }
 
     public ArrayList<String> getAllTags() {
-        String sql = "SELECT DISTINCT tagValue, COUNT(*) AS tagCount FROM IMAGE_TAG_RELATION GROUP BY tagValue ORDER BY tagCount DESC;";
+        String sql = "SELECT DISTINCT tagValue, COUNT(*) AS tagCount FROM IMAGE_TAG_RELATION WHERE tagType = "+TagDBManager.NORMAL_TAG+" GROUP BY tagValue ORDER BY tagCount DESC;";
         Cursor a = db.rawQuery(sql, null);
         ArrayList<String> results = new ArrayList<String>();
         while (a.moveToNext()) {
