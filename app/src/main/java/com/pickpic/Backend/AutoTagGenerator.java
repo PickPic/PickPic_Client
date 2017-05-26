@@ -68,8 +68,9 @@ public class AutoTagGenerator {
                                     Log.v("Json", jsonObject.get("tag" + i).toString());
                                     tagDBManager.insertTag(jsonObject.get("path").toString(), jsonObject.get("tag" + i).toString(), TagDBManager.NORMAL_TAG);
                                 }
-                                tagDBManager.makeTrueTagGenerated(jsonObject.get("path").toString());
-
+                                if(size > 0) {
+                                    tagDBManager.makeTrueTagGenerated(jsonObject.get("path").toString());
+                                }
                                 ArrayList<String> test = tagDBManager.getAllImages();
                                 Log.v("generater add image", "image num : " + test.size());
                                 test = tagDBManager.getAllTags();
