@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        //new TagDBManager(this).initTable();
         new Synchronizer(this).execute();
     }
 
@@ -83,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
-    private Context thisContext = this;
+
+    public Context getContext(){
+        return this;
+    }
     public void vert_btn(View v){
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
@@ -93,12 +96,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menu){
                 switch (menu.getItemId()){
                     case R.id.syncMenu:
-
-                        new Synchronizer(thisContext).execute();
-                        Toast.makeText(getApplicationContext(),"synchronize is completed.",Toast.LENGTH_SHORT).show();
+                        new Synchronizer(getContext()).execute();
+                        break;
+                    case R.id.dropMenu:
+                        new TagDBManager(getContext()).initTable();
                         break;
                     case R.id.howToUseMenu:
-
                         Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(intent2);
                         break;
