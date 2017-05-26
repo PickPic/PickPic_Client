@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pickpic.Activity.SearchActivity;
 import com.pickpic.R;
 
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ import java.util.ArrayList;
 public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<String> items;
+    private SearchActivity searchActivity;
 
-    public SearchRecyclerViewAdapter(){
+    public SearchRecyclerViewAdapter(SearchActivity searchActivity){
         items = new ArrayList<String>();
+        this.searchActivity = searchActivity;
     }
     public void addItem(String input){
         items.add(input);
@@ -30,7 +33,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.search_recycleview_item,viewGroup,false);
-        return new ViewHolder(view, items, this);
+        return new ViewHolder(view, items, this, searchActivity);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
         public ImageButton imageButton;
         public TextView textView;
 
-        public ViewHolder(View itemView, final ArrayList<String> items, final SearchRecyclerViewAdapter searchRecyclerViewAdapter){
+        public ViewHolder(View itemView, final ArrayList<String> items, final SearchRecyclerViewAdapter searchRecyclerViewAdapter, final SearchActivity searchActivity){
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.search_activity_recycleview_item_text);
             imageButton = (ImageButton) itemView.findViewById(R.id.search_activity_recycleview_item_remove_btn);
@@ -63,6 +66,8 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
                 public void onClick(View v) {
                     items.remove(textView.getText().toString());
                     searchRecyclerViewAdapter.notifyDataSetChanged();
+                    searchActivity.setListView();
+
                 }
             });
         }

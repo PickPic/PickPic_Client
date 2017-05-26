@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerViewAdapter = new SearchRecyclerViewAdapter();
+        recyclerViewAdapter = new SearchRecyclerViewAdapter(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
 
@@ -65,11 +65,19 @@ public class SearchActivity extends AppCompatActivity {
         setListView();
 
         Intent intent = getIntent();
-        String bucket = intent.getStringExtra("bucket");
-        if(!bucket.equals("")) {
-            showDirectory(bucket);
-            recyclerViewAdapter.addItem(LocalImageManager.getBucketName(getApplicationContext(),bucket));
+
+        if(intent.getStringExtra("bucket") != null){
+            showDirectory(intent.getStringExtra("bucket"));
+            recyclerViewAdapter.addItem(LocalImageManager.getBucketName(getApplicationContext(),intent.getStringExtra("bucket")));
         }
+
+        if(intent.getStringExtra("tag") != null){
+            showDirectory(intent.getStringExtra("tag"));
+            recyclerViewAdapter.addItem( intent.getStringExtra("tag"));
+            setGridViewFromTagTab();
+        }
+
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,12 +129,10 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void setListView() {
+    public void setListView() {
         gridView.setVisibility(GridView.INVISIBLE);
         listView.setVisibility(ListView.VISIBLE);
         ArrayList<String> tagList = tagDBManager.getRecommendTagList(recyclerViewAdapter.getItems(), textView.getText().toString());
-        for(int i = 0;i < recyclerViewAdapter.getItems().size();i++)
-            Log.v("sekyo",recyclerViewAdapter.getItems().get(i));
         listViewAdapter.clear();
         listViewAdapter.addAll(tagList);
     }
@@ -134,6 +140,15 @@ public class SearchActivity extends AppCompatActivity {
         gridView.setVisibility(GridView.VISIBLE);
         listView.setVisibility(ListView.INVISIBLE);
         gridViewAdaptor.setItems(LocalImageManager.getImagesInDirectory(getApplicationContext(),bucket));
+    }
+    private void setGridViewFromTagTab(){
+        gridView.setVisibility(GridView.VISIBLE);
+        listView.setVisibility(ListView.INVISIBLE);
+        ArrayList<String> inputs = tagDBManager.getPathsByTags(recyclerViewAdapter.getItems());
+
+        ArrayList<GridViewItem> gridViewItems = LocalImageManager.getGridViewItemList(getApplicationContext(),inputs);
+        gridViewAdaptor.setItems(gridViewItems);
+
     }
     private void setGridView() {
         if (!textView.getText().toString().equals("")) {
