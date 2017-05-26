@@ -74,7 +74,7 @@ public class SearchActivity extends AppCompatActivity {
         if(intent.getStringExtra("tag") != null){
             showDirectory(intent.getStringExtra("tag"));
             recyclerViewAdapter.addItem( intent.getStringExtra("tag"));
-            setGridView();
+            setGridViewFromTagTab();
         }
 
 
@@ -140,6 +140,15 @@ public class SearchActivity extends AppCompatActivity {
         gridView.setVisibility(GridView.VISIBLE);
         listView.setVisibility(ListView.INVISIBLE);
         gridViewAdaptor.setItems(LocalImageManager.getImagesInDirectory(getApplicationContext(),bucket));
+    }
+    private void setGridViewFromTagTab(){
+        gridView.setVisibility(GridView.VISIBLE);
+        listView.setVisibility(ListView.INVISIBLE);
+        ArrayList<String> inputs = tagDBManager.getPathsByTags(recyclerViewAdapter.getItems());
+
+        ArrayList<GridViewItem> gridViewItems = LocalImageManager.getGridViewItemList(getApplicationContext(),inputs);
+        gridViewAdaptor.setItems(gridViewItems);
+
     }
     private void setGridView() {
         if (!textView.getText().toString().equals("")) {
