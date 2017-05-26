@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.pickpic.Adapter.TabAdapter;
+import com.pickpic.Backend.LocalImageManager;
 import com.pickpic.Backend.Synchronizer;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ViewPager viewPager =
                 (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new TabAdapter
+        final TabAdapter adapter = new TabAdapter
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -73,13 +74,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new TagDBManager(this).initTable();
         new Synchronizer(this).execute();
     }
 
     public  void search_btn(View view){
         Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra("bucket","");
         startActivity(intent);
     }
 
