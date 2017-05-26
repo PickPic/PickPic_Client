@@ -1,7 +1,9 @@
 package com.pickpic.Activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 import com.pickpic.Fragment.ImageFragment;
 import com.pickpic.Fragment.TagFragment;
 import com.pickpic.R;
+
+import java.io.File;
 
 import static android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 
@@ -127,6 +131,7 @@ public class GalleryActivity extends AppCompatActivity {
                 case R.id.share:
                     Toast toast1 = Toast.makeText(getApplicationContext(), "Sharing", Toast.LENGTH_SHORT);
                     toast1.show();
+                    shareImage();
                     break;
                 case R.id.rotate:
                     imageFragment.rotateImage();
@@ -143,6 +148,12 @@ public class GalleryActivity extends AppCompatActivity {
             return false;
         }
     };
-
-
+    public void shareImage() {
+        File file = new File(filepath);
+        Uri mSaveImageUri = Uri.fromFile(file);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/jpg");
+        intent.putExtra(Intent.EXTRA_STREAM, mSaveImageUri);
+        startActivity(Intent.createChooser(intent, "Choose"));
+    }
 }

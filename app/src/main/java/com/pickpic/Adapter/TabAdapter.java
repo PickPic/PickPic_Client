@@ -11,7 +11,9 @@ import com.pickpic.Fragment.TagTabFragment;
 public class TabAdapter extends FragmentPagerAdapter {
 
     int tabCount;
-
+    DirectoryTabFragment directoryTabFragment;
+    TimeTabFragment timeTabFragment;
+    TagTabFragment tagTabFragment;
     public TabAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
         this.tabCount = numberOfTabs;
@@ -22,19 +24,18 @@ public class TabAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                DirectoryTabFragment directoryTabFragment = new DirectoryTabFragment();
+                directoryTabFragment = new DirectoryTabFragment();
                 return directoryTabFragment;
             case 1:
-                TimeTabFragment timeTabFragment = new TimeTabFragment();
+                timeTabFragment = new TimeTabFragment();
                 return timeTabFragment;
             case 2:
-                TagTabFragment tagTabFragment = new TagTabFragment();
+                tagTabFragment = new TagTabFragment();
                 return tagTabFragment;
             default:
                 return null;
         }
     }
-
     @Override
     public int getCount() {
         return tabCount;

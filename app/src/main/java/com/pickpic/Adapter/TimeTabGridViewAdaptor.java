@@ -117,7 +117,7 @@ class TimeTabGridViewThumbnailManager extends AsyncTask<Void, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap bitmap) {
-        if (gridView.getFirstVisiblePosition() <= position && gridView.getFirstVisiblePosition() + 30 > position)
+        if (gridView.getFirstVisiblePosition() <= position && gridView.getLastVisiblePosition() >= position)
             imageView.setImageBitmap(bitmap);
     }
 }

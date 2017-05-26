@@ -5,11 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.Item.GridViewItem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -74,7 +80,13 @@ public class LocalImageManager {
         if (cursor.moveToNext()) {
             int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED);
             date = cursor.getString(columnIndex);
+            date += "000";
+            String format = "MM/dd/yyyy";
+            SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.ENGLISH);
+
+            date = formatter.format(new Date(Long.parseLong(date)));
         }
+        Log.v("datedate",date);
         return date;
     }
 
