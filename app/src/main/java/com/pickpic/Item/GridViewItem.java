@@ -1,7 +1,5 @@
 package com.pickpic.Item;
 
-import android.graphics.Bitmap;
-
 public class GridViewItem {
 
     private long thumbnail;

@@ -5,20 +5,15 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.pickpic.Activity.GalleryActivity;
-import com.pickpic.Activity.SearchActivity;
 import com.pickpic.Adapter.TimeTabGridViewAdaptor;
 import com.pickpic.Backend.LocalImageManager;
-import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.Item.GridViewItem;
 import com.pickpic.R;
 

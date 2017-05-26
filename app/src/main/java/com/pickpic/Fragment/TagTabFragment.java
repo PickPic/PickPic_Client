@@ -35,7 +35,7 @@ public class TagTabFragment extends Fragment {
         listView.setAdapter(listViewAdapter);
 
         TagDBManager tagDBManager = new TagDBManager(getActivity());
-        ArrayList<String> list = tagDBManager.getRecommendTagList(null,"");
+        ArrayList<String> list = tagDBManager.getAllTags();
         listViewAdapter.addAll(list);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
