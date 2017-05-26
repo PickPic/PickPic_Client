@@ -11,11 +11,13 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
+import com.pickpic.Backend.TagDBManager;
 import com.pickpic.Fragment.ImageFragment;
 import com.pickpic.Fragment.TagFragment;
 import com.pickpic.R;
+
+import java.io.File;
 
 import static android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 
@@ -124,25 +126,20 @@ public class GalleryActivity extends AppCompatActivity {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()){
+
                 case R.id.share:
-                    Toast toast1 = Toast.makeText(getApplicationContext(), "Sharing", Toast.LENGTH_SHORT);
-                    toast1.show();
+
                     break;
-                case R.id.rotate:
-                    imageFragment.rotateImage();
-                    break;
-                case R.id.info:
-                    Toast toast2 = Toast.makeText(getApplicationContext(), "Show more information", Toast.LENGTH_SHORT);
-                    toast2.show();
-                    break;
+
                 case R.id.delete:
-                    Toast toast3 = Toast.makeText(getApplicationContext(), "Delete this picture", Toast.LENGTH_SHORT);
-                    toast3.show();
+                    imageFragment.deleteImage();
                     break;
+
             }
             return false;
         }
     };
+
 
 
 }

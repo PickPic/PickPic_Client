@@ -1,17 +1,24 @@
 package com.pickpic.Fragment;
 
-import android.graphics.Bitmap;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
+
+import java.io.File;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -50,22 +57,37 @@ public class ImageFragment extends Fragment{
         return view;
     }
 
-    public void rotateImage() {
-        degree = (degree + 90) % 360;
+    public boolean deleteImage() {
 
-        rotateImage(BitmapFactory.decodeFile(imageFilePath), degree);
-    }
+        final boolean[] delete = {false};
 
-    private void rotateImage(Bitmap src, float degree) {
-        Bitmap temp;
+        AlertDialog.Builder deleteimage = new AlertDialog.Builder(getContext());
+        deleteimage.setTitle("Delete this image");
+        deleteimage.setMessage("Are you sure?");
 
-        //rotate
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        temp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        deleteimage.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                delete[0] = true;
+                (new TagDBManager(getContext())).removeImage(imageFilePath);
+                File file = new File(imageFilePath);
+                if(file.exists()) {
+                    file.delete();
+                }
+                dialog.dismiss();
+            }
+        });
 
-        imageView.setImageBitmap(temp);
+        deleteimage.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                delete[0] = false;
+                dialog.dismiss();
+            }
+        });
+        deleteimage.show();
 
+        return delete[0];
     }
 
 
