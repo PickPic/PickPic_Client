@@ -6,13 +6,16 @@
 
             <item
                 android:id="@+id/syncMenu"
-                android:title="synchronize" />
+                android:title="Synchronize" />
+            <item
+                android:id="@+id/dropMenu"
+                android:title="Reset all tags"/>
             <item
                 android:id="@+id/howToUseMenu"
                 android:title="How to use" />
             <item
                 android:id="@+id/serviceCenterMenu"
-                android:title="service center" />
+                android:title="Service center" />
 
 
 </menu>
