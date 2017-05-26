@@ -12,6 +12,8 @@ import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.Item.GridViewItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -70,14 +72,20 @@ public class LocalImageManager {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_ADDED};
         String[] selection = {path};
-        String date = null;
+        Integer dateInteger = null;
+        String result = null;
 
         Cursor cursor = context.getContentResolver().query(uri, projection, MediaStore.Images.Media.DATA + "=?", selection, "DATE_ADDED DESC");
         if (cursor.moveToNext()) {
             int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED);
-            date = cursor.getString(columnIndex);
+            dateInteger = cursor.getInt(columnIndex);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(dateInteger);
+            Date date = calendar.getTime();
+            result = android.text.format.DateFormat.format("MM/dd/yyyy hh:mm", date).toString();
         }
-        return date;
+        return result;
     }
 
     public static GridViewItem getGridViewItem(Context context, String path) {
