@@ -1,6 +1,7 @@
 package com.pickpic.Activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.*;
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
-
+    private Context thisContext = this;
     public void vert_btn(View v){
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menu.getItemId()){
                     case R.id.syncMenu:
 
-                        new Synchronizer(getApplicationContext()).execute();
+                        new Synchronizer(thisContext).execute();
                         Toast.makeText(getApplicationContext(),"synchronize is completed.",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.howToUseMenu:
