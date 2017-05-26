@@ -1,26 +1,18 @@
 package com.pickpic.Fragment;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.pickpic.Activity.GalleryActivity;
-import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
-
-import java.io.File;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -34,6 +26,7 @@ public class ImageFragment extends Fragment{
     String imageFilePath;
     int degree;
     PhotoViewAttacher photoViewAttacher;
+    View view;
 
     public ImageFragment(String filepath) {
         this.imageFilePath = filepath;
@@ -48,7 +41,7 @@ public class ImageFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_image,container,false);
+        view = inflater.inflate(R.layout.fragment_image,container,false);
 
         degree = 0;
 
@@ -59,4 +52,37 @@ public class ImageFragment extends Fragment{
         return view;
     }
 
-}
+    public void rotateImage() {
+
+        degree = (degree + 90) % 360;
+
+
+
+        rotateImage(BitmapFactory.decodeFile(imageFilePath), degree);
+
+    }
+
+
+
+    private void rotateImage(Bitmap src, float degree) {
+
+        Bitmap temp;
+
+
+        //rotate
+
+        Matrix matrix = new Matrix();
+
+        matrix.postRotate(degree);
+
+        temp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+
+
+        imageView.setImageBitmap(temp);
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+    }
+
+
+
+    }
