@@ -1,91 +1,150 @@
 package com.pickpic.Activity;
 
-import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.pickpic.Adapter.SearchRecyclerViewAdapter;
+import com.pickpic.Adapter.TimeTabGridViewAdaptor;
+import com.pickpic.Backend.LocalImageManager;
 import com.pickpic.Backend.TagDBManager;
-import com.pickpic.Fragment.RecommendTagListFragment;
-import com.pickpic.Fragment.SearchResultFragment;
-import com.pickpic.Item.RecommendTagListItem;
+import com.pickpic.Item.GridViewItem;
 import com.pickpic.R;
 
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
-
-
-    //입력받은 스트링 가져오기
-    EditText inputString;
-
-    public SearchActivity(){
-
-    }
-
-    public String getData(){
-        return inputString.getText().toString();
-    }
-
-    private boolean isRecommendTagList = true;
-    RecommendTagListFragment recommendTagListFragment = new RecommendTagListFragment();
+    private EditText textView;
+    private GridView gridView;
+    private ListView listView;
+    private ImageButton searchButton;
+    private TagDBManager tagDBManager;
+    private ArrayAdapter listViewAdapter;
+    private RecyclerView recyclerView;
+    private SearchRecyclerViewAdapter recyclerViewAdapter;
+    private TimeTabGridViewAdaptor gridViewAdaptor;
     @Override
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        final TagDBManager tagDBManager = new TagDBManager(this);
-        inputString = (EditText) findViewById(R.id.inputText) ;
+        tagDBManager = new TagDBManager(getApplicationContext());
 
-        FrameLayout frameLayout;
-        frameLayout = (FrameLayout)findViewById(R.id.frame);
+        textView = (EditText) findViewById(R.id.inputText);
+        gridView = (GridView) findViewById(R.id.search_activity_gridview);
+        listView = (ListView) findViewById(R.id.search_activity_listview);
+        searchButton = (ImageButton) findViewById(R.id.search_activity_search_btn);
+        recyclerView = (RecyclerView) findViewById(R.id.search_activity_recycleview);
 
-        //초기 fragment
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.frame, recommendTagListFragment);
-        fragmentTransaction.commit();
+        listViewAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        listView.setAdapter(listViewAdapter);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerViewAdapter = new SearchRecyclerViewAdapter();
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        gridViewAdaptor = new TimeTabGridViewAdaptor(gridView, BitmapFactory.decodeResource(getResources(), R.drawable.blank));
+        gridView.setAdapter(gridViewAdaptor);
+
+        setListView();
+
+        Intent intent = getIntent();
+        String bucket = intent.getStringExtra("bucket");
+        if(!bucket.equals("")) {
+            showDirectory(bucket);
+            recyclerViewAdapter.addItem(LocalImageManager.getBucketName(getApplicationContext(),bucket));
+        }
 
 
-        ImageButton button1 = (ImageButton) findViewById(R.id.button1);
-        button1.setOnClickListener(new Button.OnClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v){//버튼이 눌리면 searchresult로 fragment변경
-
-
-                Log.v("searched Tag:", getData());    //검색된 검색어 출력해보기
-
-
-                if(!(getData().isEmpty())){ //아무 스트링도 입력하지 않으면 실행 안함
-
-                    SearchResultFragment searchResultFragment = new SearchResultFragment();
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.replace(R.id.frame, searchResultFragment);
-                    fragmentTransaction.commit();
-
-                }
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                textView.setText((String) listViewAdapter.getItem(position));
+                textView.setSelection(textView.length());
             }
         });
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setGridView();
+            }
+        });
 
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setListView();
+            }
+        });
+
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                setListView();
+            }
+        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id){
+                String selectedimage = ((GridViewItem)gridViewAdaptor.getItem(position)).getPath();
+
+                Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
+                intent.putExtra("filepath", selectedimage);
+                startActivity(intent);
+
+            }
+        });
+    }
+
+    private void setListView() {
+        gridView.setVisibility(GridView.INVISIBLE);
+        listView.setVisibility(ListView.VISIBLE);
+        ArrayList<String> tagList = tagDBManager.getRecommendTagList(recyclerViewAdapter.getItems(), textView.getText().toString());
+        for(int i = 0;i < recyclerViewAdapter.getItems().size();i++)
+            Log.v("sekyo",recyclerViewAdapter.getItems().get(i));
+        listViewAdapter.clear();
+        listViewAdapter.addAll(tagList);
+    }
+    private void showDirectory(String bucket){
+        gridView.setVisibility(GridView.VISIBLE);
+        listView.setVisibility(ListView.INVISIBLE);
+        gridViewAdaptor.setItems(LocalImageManager.getImagesInDirectory(getApplicationContext(),bucket));
+    }
+    private void setGridView() {
+        if (!textView.getText().toString().equals("")) {
+            recyclerViewAdapter.addItem(textView.getText().toString());
+            textView.getText().clear();
+            gridView.setVisibility(GridView.VISIBLE);
+            listView.setVisibility(ListView.INVISIBLE);
+            ArrayList<String> inputs = tagDBManager.getPathsByTags(recyclerViewAdapter.getItems());
+
+            ArrayList<GridViewItem> gridViewItems = LocalImageManager.getGridViewItemList(getApplicationContext(),inputs);
+            gridViewAdaptor.setItems(gridViewItems);
+        }
     }
 }

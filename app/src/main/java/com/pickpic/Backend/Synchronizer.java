@@ -2,11 +2,8 @@ package com.pickpic.Backend;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 

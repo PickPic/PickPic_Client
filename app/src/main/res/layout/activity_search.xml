@@ -10,32 +10,55 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="45dp"
         android:background="@color/colorToolbar"
         android:elevation="4dp">
-
         <EditText
             android:id="@+id/inputText"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:hint="Write the tag you want to find"
-            android:background="@null"
             android:maxLines="1" />
 
         <ImageButton
-            android:id="@+id/button1"
+            android:id="@+id/search_activity_search_btn"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_search_black_24dp"
-            android:background="@android:color/transparent"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_gravity="right"
             />
-
     </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:background="@color/colorToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_activity_recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
     <FrameLayout
-        android:id="@+id/frame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/search_activity_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+        <GridView
+            android:id="@+id/search_activity_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="90dp"
+            android:gravity="center"
+            android:numColumns="auto_fit"></GridView>
+    </FrameLayout>
 
 </LinearLayout>

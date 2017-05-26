@@ -1,7 +1,5 @@
 package com.pickpic.Item;
 
-import android.widget.ImageButton;
-
 /**
  * Created by yewon on 2017-05-14.
  */

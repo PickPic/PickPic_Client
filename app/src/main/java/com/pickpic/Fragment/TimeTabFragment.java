@@ -5,20 +5,15 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.pickpic.Activity.GalleryActivity;
-import com.pickpic.Activity.SearchActivity;
 import com.pickpic.Adapter.TimeTabGridViewAdaptor;
 import com.pickpic.Backend.LocalImageManager;
-import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.Item.GridViewItem;
 import com.pickpic.R;
 
@@ -46,7 +41,9 @@ public class TimeTabFragment extends Fragment {
         inflater.inflate(R.layout.time_tab_fragment, container, false);
         gridView.setAdapter(adaptor);
 
-        LocalImageManager.getTimeTabGridViewItemList(getContext(),adaptor);
+        ArrayList<GridViewItem>  gridViewItems = LocalImageManager.getTimeTabGridViewItemList(getContext());
+        for(int i = 0;i < gridViewItems.size(); i++)
+            adaptor.addItem(gridViewItems.get(i));
 
         final ArrayList<String> imagepath = LocalImageManager.getAllImagePath(getContext(), "DESC");
 
