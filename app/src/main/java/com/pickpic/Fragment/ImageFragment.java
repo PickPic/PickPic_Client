@@ -2,6 +2,7 @@ package com.pickpic.Fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.pickpic.Activity.GalleryActivity;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
 
@@ -56,39 +58,5 @@ public class ImageFragment extends Fragment{
 
         return view;
     }
-
-    public boolean deleteImage() {
-
-        final boolean[] delete = {false};
-
-        AlertDialog.Builder deleteimage = new AlertDialog.Builder(getContext());
-        deleteimage.setTitle("Delete this image");
-        deleteimage.setMessage("Are you sure?");
-
-        deleteimage.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                delete[0] = true;
-                (new TagDBManager(getContext())).removeImage(imageFilePath);
-                File file = new File(imageFilePath);
-                if(file.exists()) {
-                    file.delete();
-                }
-                dialog.dismiss();
-            }
-        });
-
-        deleteimage.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                delete[0] = false;
-                dialog.dismiss();
-            }
-        });
-        deleteimage.show();
-
-        return delete[0];
-    }
-
 
 }
