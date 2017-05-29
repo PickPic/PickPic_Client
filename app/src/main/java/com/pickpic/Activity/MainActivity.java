@@ -25,6 +25,12 @@ import com.pickpic.R;
 
 
 public class MainActivity extends AppCompatActivity {
+    Toolbar toolbar;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    TabAdapter adapter;
+    PopupMenu popupMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 툴바 선언
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // 탭 선언
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(
                 R.drawable.ic_folder_black_48dp));
@@ -49,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.getTabAt(i).getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
         }
 
-        final ViewPager viewPager =
+        viewPager =
                 (ViewPager) findViewById(R.id.pager);
-        final TabAdapter adapter = new TabAdapter
+        adapter = new TabAdapter
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -75,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //new TagDBManager(this).initTable();
         new Synchronizer(this).execute();
     }
 
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         return this;
     }
     public void vert_btn(View v){
-        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){

@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pickpic.Backend.TagDBManager;
-import com.pickpic.Item.TagListItem;
+import com.pickpic.Item.GalleryTagListItem;
 import com.pickpic.R;
 
 import java.util.ArrayList;
@@ -20,28 +20,28 @@ import java.util.ArrayList;
  * Created by yewon on 2017-05-14.
  */
 
-public class TagListAdapter extends BaseAdapter {
+public class GalleryTagListAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<TagListItem> tagListItemArrayList;
+    ArrayList<GalleryTagListItem> galleryTagListItemArrayList;
     String imagefilepath;
     TextView tag_name;
     ImageButton deletetag;
 
-    public TagListAdapter(Context context, ArrayList<TagListItem> tagListItemArrayList, String filepath) {
+    public GalleryTagListAdapter(Context context, ArrayList<GalleryTagListItem> galleryTagListItemArrayList, String filepath) {
         this.context = context;
-        this.tagListItemArrayList = tagListItemArrayList;
+        this.galleryTagListItemArrayList = galleryTagListItemArrayList;
         this.imagefilepath = filepath;
     }
 
     @Override
     public int getCount() {
-        return this.tagListItemArrayList.size();
+        return this.galleryTagListItemArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return tagListItemArrayList.get(position);
+        return galleryTagListItemArrayList.get(position);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class TagListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.tag_list, null);
         }
         tag_name = (TextView)convertView.findViewById(R.id.name);
-        tag_name.setText(tagListItemArrayList.get(position).getTag());
+        tag_name.setText(galleryTagListItemArrayList.get(position).getTag());
 
         deletetag = (ImageButton)convertView.findViewById(R.id.deleteTag);
         final int deletekey = position;
@@ -64,7 +64,7 @@ public class TagListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                final String selectedtag = tagListItemArrayList.get(deletekey).getTag();
+                final String selectedtag = galleryTagListItemArrayList.get(deletekey).getTag();
 
                 AlertDialog.Builder tagdelete = new AlertDialog.Builder(finalConvertView.getContext());
                 tagdelete.setTitle("Delete tag");
@@ -73,7 +73,7 @@ public class TagListAdapter extends BaseAdapter {
                 tagdelete.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        tagListItemArrayList.remove(deletekey);
+                        galleryTagListItemArrayList.remove(deletekey);
                         (new TagDBManager(context)).removeTag(imagefilepath, selectedtag);
                         dialog.dismiss();
                         notifyDataSetChanged();
