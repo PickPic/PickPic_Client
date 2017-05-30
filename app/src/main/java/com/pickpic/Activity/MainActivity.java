@@ -23,7 +23,7 @@ import com.pickpic.Backend.Synchronizer;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
 
-
+// This is mainactivity : provide base skeleton. 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        // 툴바 선언
+        // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // 탭 선언
+        // Tab
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-
         viewPager.addOnPageChangeListener(new
                 TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        // tab select listener is declared as below
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -78,19 +78,20 @@ public class MainActivity extends AppCompatActivity {
         //new TagDBManager(this).initTable();
         new Synchronizer(this).execute();
     }
-
+    // this is search button method
     public  void search_btn(View view){
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
-
+    // this is for menu button
     public Context getContext(){
         return this;
     }
+    // this is menu button method
     public void vert_btn(View v){
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
-
+        // on click listener
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem menu){
