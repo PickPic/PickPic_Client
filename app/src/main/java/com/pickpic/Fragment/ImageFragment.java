@@ -28,6 +28,7 @@ public class ImageFragment extends Fragment{
     PhotoViewAttacher photoViewAttacher;
     View view;
 
+    //constructor
     public ImageFragment(String filepath) {
         this.imageFilePath = filepath;
     }
@@ -37,6 +38,7 @@ public class ImageFragment extends Fragment{
         super.onCreate(savedInstanceState);
     }
 
+    //connect xml file and java code, display image
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,37 +54,25 @@ public class ImageFragment extends Fragment{
         return view;
     }
 
+    //activated when rotate button in menu is clicked
     public void rotateImage() {
-
         degree = (degree + 90) % 360;
-
-
-
         rotateImage(BitmapFactory.decodeFile(imageFilePath), degree);
-
     }
 
-
-
+    //rotate image and display
     private void rotateImage(Bitmap src, float degree) {
 
         Bitmap temp;
 
-
         //rotate
-
         Matrix matrix = new Matrix();
-
         matrix.postRotate(degree);
-
         temp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-
 
         imageView.setImageBitmap(temp);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
     }
 
-
-
-    }
+}
