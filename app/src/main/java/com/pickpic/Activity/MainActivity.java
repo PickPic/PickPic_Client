@@ -1,31 +1,42 @@
 package com.pickpic.Activity;
 
+
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ContentFrameLayout;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.*;
-import android.support.v4.view.PagerAdapter;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-import com.pickpic.Adapter.TabPagerAdapter;
+import com.pickpic.Adapter.TabAdapter;
+import com.pickpic.Backend.LocalImageManager;
+import com.pickpic.Backend.Synchronizer;
+import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        // 툴바 선언
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TabLayout tabLayout =
-                (TabLayout) findViewById(R.id.tab_layout);
+        // 탭 선언
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(
                 R.drawable.ic_folder_black_48dp));
@@ -40,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ViewPager viewPager =
                 (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new TabPagerAdapter
+        final TabAdapter adapter = new TabAdapter
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -64,5 +75,45 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        //new TagDBManager(this).initTable();
+        new Synchronizer(this).execute();
     }
+
+    public  void search_btn(View view){
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public Context getContext(){
+        return this;
+    }
+    public void vert_btn(View v){
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick(MenuItem menu){
+                switch (menu.getItemId()){
+                    case R.id.syncMenu:
+                        new Synchronizer(getContext()).execute();
+                        break;
+                    case R.id.dropMenu:
+                        new TagDBManager(getContext()).initTable();
+                        break;
+                    case R.id.howToUseMenu:
+                        Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.serviceCenterMenu:
+                        Intent intent3 = new Intent(MainActivity.this, ServiceCenterActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
+    }
+
 }

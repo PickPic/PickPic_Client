@@ -2,16 +2,16 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.pickpic.Fragment.TimeTabFragment">
+             tools:context="com.pickpic.Fragment.DirectoryTabFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Tab 2 Fragment"
-        android:id="@+id/textView"
+    <ListView
+        android:id="@+id/directory_tab_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
+
+
 </RelativeLayout >
