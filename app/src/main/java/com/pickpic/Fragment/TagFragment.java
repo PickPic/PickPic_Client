@@ -43,6 +43,7 @@ public class TagFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    //show all tags as list
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class TagFragment extends Fragment {
         return view;
     }
 
+    //activated when add button is clicked
     private View.OnClickListener addTagListener = new View.OnClickListener() {
 
         @Override
@@ -78,7 +80,7 @@ public class TagFragment extends Fragment {
         }
     };
 
-
+    //dialog asking the user what tag to add
     private void tagInputDialog() {
         AlertDialog.Builder taginput = new AlertDialog.Builder(getContext());
         taginput.setTitle("Add tag");
