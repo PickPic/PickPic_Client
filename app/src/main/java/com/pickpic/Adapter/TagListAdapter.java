@@ -28,6 +28,7 @@ public class TagListAdapter extends BaseAdapter {
     TextView tag_name;
     ImageButton deletetag;
 
+    //constructor
     public TagListAdapter(Context context, ArrayList<TagListItem> tagListItemArrayList, String filepath) {
         this.context = context;
         this.tagListItemArrayList = tagListItemArrayList;
@@ -49,6 +50,7 @@ public class TagListAdapter extends BaseAdapter {
         return position;
     }
 
+    //Organizing tag list and Deleting tag
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
