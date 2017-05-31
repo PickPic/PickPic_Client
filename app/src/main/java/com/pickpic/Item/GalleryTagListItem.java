@@ -4,11 +4,11 @@ package com.pickpic.Item;
  * Created by yewon on 2017-05-14.
  */
 
-public class TagListItem {
+public class GalleryTagListItem {
 
     private String tag;
 
-    public TagListItem(String tag) {
+    public GalleryTagListItem(String tag) {
         this.tag = tag;
     }
 

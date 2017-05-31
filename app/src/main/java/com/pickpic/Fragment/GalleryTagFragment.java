@@ -1,7 +1,6 @@
 package com.pickpic.Fragment;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,15 +8,13 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.pickpic.Activity.SearchActivity;
-import com.pickpic.Adapter.TagListAdapter;
+import com.pickpic.Adapter.GalleryTagListAdapter;
 import com.pickpic.Backend.TagDBManager;
-import com.pickpic.Item.TagListItem;
+import com.pickpic.Item.GalleryTagListItem;
 import com.pickpic.R;
 
 import java.util.ArrayList;
@@ -26,15 +23,15 @@ import java.util.ArrayList;
  * Created by yewon on 2017-05-09.
  */
 
-public class TagFragment extends Fragment {
+public class GalleryTagFragment extends Fragment {
 
     ListView tagView;
-    TagListAdapter tagListAdapter;
-    ArrayList<TagListItem> tagListItems;
+    GalleryTagListAdapter galleryTagListAdapter;
+    ArrayList<GalleryTagListItem> galleryTagListItems;
     ImageButton addTag;
     String imageFilePath;
 
-    public TagFragment(String filepath) {
+    public GalleryTagFragment(String filepath) {
         this.imageFilePath = filepath;
     }
 
@@ -54,19 +51,19 @@ public class TagFragment extends Fragment {
         addTag.setOnClickListener(addTagListener);
 
         tagView = (ListView)view.findViewById(R.id.tagList);
-        tagListItems = new ArrayList<TagListItem>();
+        galleryTagListItems = new ArrayList<GalleryTagListItem>();
 
         ArrayList<String> getTags = (new TagDBManager(getContext())).getTagsByPath(imageFilePath);
         if(getTags.size() == 0) {
-            tagListItems.add(new TagListItem("no tags"));
+            galleryTagListItems.add(new GalleryTagListItem("no tags"));
         } else {
             for (int i = 0; i < getTags.size(); i++) {
-                tagListItems.add(new TagListItem(getTags.get(i)));
+                galleryTagListItems.add(new GalleryTagListItem(getTags.get(i)));
             }
         }
 
-        tagListAdapter = new TagListAdapter(this.getContext(), tagListItems, imageFilePath);
-        tagView.setAdapter(tagListAdapter);
+        galleryTagListAdapter = new GalleryTagListAdapter(this.getContext(), galleryTagListItems, imageFilePath);
+        tagView.setAdapter(galleryTagListAdapter);
 
         return view;
     }
@@ -93,8 +90,8 @@ public class TagFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 String temp = tag.getText().toString();
                 (new TagDBManager(getContext())).insertTag(imageFilePath, temp, TagDBManager.NORMAL_TAG);
-                tagListItems.add(new TagListItem(temp));
-                tagListAdapter.notifyDataSetChanged();
+                galleryTagListItems.add(new GalleryTagListItem(temp));
+                galleryTagListAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });

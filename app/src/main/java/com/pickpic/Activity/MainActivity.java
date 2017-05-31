@@ -25,6 +25,12 @@ import com.pickpic.R;
 
 // This is mainactivity : provide base skeleton. 
 public class MainActivity extends AppCompatActivity {
+    Toolbar toolbar;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    TabAdapter adapter;
+    PopupMenu popupMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.getTabAt(i).getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
         }
 
-        final ViewPager viewPager =
+        viewPager =
                 (ViewPager) findViewById(R.id.pager);
-        final TabAdapter adapter = new TabAdapter
+        adapter = new TabAdapter
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -75,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //new TagDBManager(this).initTable();
+
+        Intent intent = new Intent(MainActivity.this, ManualActivity.class);
+        startActivity(intent);
+
         new Synchronizer(this).execute();
     }
     // this is search button method
@@ -89,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // this is menu button method
     public void vert_btn(View v){
-        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
         // on click listener
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){

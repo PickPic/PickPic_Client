@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
@@ -32,6 +33,7 @@
         <activity
             android:name=".Activity.ServiceCenterActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".Activity.ManualActivity"></activity>
     </application>
 
 </manifest>

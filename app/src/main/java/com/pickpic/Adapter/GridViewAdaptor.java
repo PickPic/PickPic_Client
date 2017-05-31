@@ -17,7 +17,7 @@ import com.pickpic.R;
 
 import java.util.ArrayList;
 
-public class TimeTabGridViewAdaptor extends BaseAdapter {
+public class GridViewAdaptor extends BaseAdapter {
     private ArrayList<GridViewItem> gridViewItems = new ArrayList<GridViewItem>();
     private GridView gridView;
     private int gridViewScrollState = 0;
@@ -29,7 +29,7 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
         return gridViewItems.size();
     }
 
-    public TimeTabGridViewAdaptor(final GridView gridView, Bitmap bitmap) {
+    public GridViewAdaptor(final GridView gridView, Bitmap bitmap) {
         this.gridView = gridView;
         this.bitmap = bitmap;
         gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -68,10 +68,10 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
         GridViewItem gridViewItem = gridViewItems.get(position);
 
         if (gridViewScrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-            new TimeTabGridViewThumbnailManager(imageView, gridViewItem.getThumbnail(), parent.getContext(), gridView, position).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+            new GridViewThumbnailManager(imageView, gridViewItem.getThumbnail(), parent.getContext(), gridView, position).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         } else if (gridViewScrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
             imageView.setImageBitmap(bitmap);
-            new TimeTabGridViewThumbnailManager(imageView, gridViewItem.getThumbnail(), parent.getContext(), gridView, position).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+            new GridViewThumbnailManager(imageView, gridViewItem.getThumbnail(), parent.getContext(), gridView, position).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         } else {
             imageView.setImageBitmap(bitmap);
 
@@ -98,14 +98,14 @@ public class TimeTabGridViewAdaptor extends BaseAdapter {
 
 }
 
-class TimeTabGridViewThumbnailManager extends AsyncTask<Void, Void, Bitmap> {
+class GridViewThumbnailManager extends AsyncTask<Void, Void, Bitmap> {
     private ImageView imageView;
     private long id;
     private Context context;
     private GridView gridView;
     private int position = -1;
 
-    public TimeTabGridViewThumbnailManager(ImageView imageView, long id, Context context, GridView gridView, int position) {
+    public GridViewThumbnailManager(ImageView imageView, long id, Context context, GridView gridView, int position) {
         this.imageView = imageView;
         this.id = id;
         this.context = context;

@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.pickpic.Adapter.SearchRecyclerViewAdapter;
-import com.pickpic.Adapter.TimeTabGridViewAdaptor;
+import com.pickpic.Adapter.GridViewAdaptor;
 import com.pickpic.Backend.LocalImageManager;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.Item.GridViewItem;
@@ -35,7 +34,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayAdapter listViewAdapter;
     private RecyclerView recyclerView;
     private SearchRecyclerViewAdapter recyclerViewAdapter;
-    private TimeTabGridViewAdaptor gridViewAdaptor;
+    private GridViewAdaptor gridViewAdaptor;
     private boolean isListView = true;
     private ImageButton backButton;
     @Override
@@ -70,7 +69,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        gridViewAdaptor = new TimeTabGridViewAdaptor(gridView, BitmapFactory.decodeResource(getResources(), R.drawable.blank));
+        gridViewAdaptor = new GridViewAdaptor(gridView, BitmapFactory.decodeResource(getResources(), R.drawable.blank));
         gridView.setAdapter(gridViewAdaptor);
 
         setListView();
