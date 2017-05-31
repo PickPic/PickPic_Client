@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MainActivity.this, ManualActivity.class);
         startActivity(intent);
-
         new Synchronizer(this).execute();
     }
     // this is search button method
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         new TagDBManager(getContext()).initTable();
                         break;
                     case R.id.howToUseMenu:
-                        Intent intent2 = new Intent(MainActivity.this, SearchActivity.class);
+                        Intent intent2 = new Intent(MainActivity.this, ManualActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.serviceCenterMenu:
