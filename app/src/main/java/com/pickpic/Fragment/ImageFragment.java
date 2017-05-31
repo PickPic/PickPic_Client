@@ -72,6 +72,7 @@ public class ImageFragment extends Fragment{
 
         imageView.setImageBitmap(temp);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        photoViewAttacher = new PhotoViewAttacher(imageView);
 
     }
 
