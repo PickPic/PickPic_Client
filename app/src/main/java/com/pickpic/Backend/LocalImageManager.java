@@ -17,7 +17,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
 /**
  * Created by sekyo on 2017-05-11.
  */
@@ -70,6 +69,7 @@ public class LocalImageManager {
         }
         return gridViewItems;
     }
+
     public static String getDateByPath(Context context, String path) {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_ADDED};
