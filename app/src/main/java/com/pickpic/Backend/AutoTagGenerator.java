@@ -33,7 +33,7 @@ class WaitSlot {
 }
 
 public class AutoTagGenerator {
-    public static int limit = 10;
+    public static int limit = 2;
     public static ArrayList<WaitSlot> que = new ArrayList<>();
     public static void autoTagGenerate(final Context context, String path) {
         if(AutoTagGenerator.limit <= 0){

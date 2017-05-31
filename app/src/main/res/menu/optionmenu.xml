@@ -7,7 +7,4 @@
     <item android:id="@+id/rotate"
         android:title="Rotate"/>
 
-    <item android:id="@+id/delete"
-        android:title="Delete" />
-
 </menu>
