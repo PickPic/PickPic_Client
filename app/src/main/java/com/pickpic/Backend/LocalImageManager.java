@@ -86,7 +86,6 @@ public class LocalImageManager {
 
             date = formatter.format(new Date(Long.parseLong(date)));
         }
-        Log.v("datedate",date);
         return date;
     }
 
