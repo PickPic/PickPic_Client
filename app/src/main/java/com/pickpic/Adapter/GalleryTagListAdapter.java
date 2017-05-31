@@ -29,6 +29,7 @@ public class GalleryTagListAdapter extends BaseAdapter {
     ImageButton deletetag;
 
     public GalleryTagListAdapter(Context context, ArrayList<GalleryTagListItem> galleryTagListItemArrayList, String filepath) {
+    //constructor
         this.context = context;
         this.galleryTagListItemArrayList = galleryTagListItemArrayList;
         this.imagefilepath = filepath;
@@ -49,6 +50,7 @@ public class GalleryTagListAdapter extends BaseAdapter {
         return position;
     }
 
+    //Organizing tag list and Deleting tag
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView == null) {

@@ -23,7 +23,7 @@ import com.pickpic.Backend.Synchronizer;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
 
-
+// This is mainactivity : provide base skeleton. 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     TabLayout tabLayout;
@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        // 툴바 선언
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // 탭 선언
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        // Tab
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(
                 R.drawable.ic_folder_black_48dp));
@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
                 (getSupportFragmentManager(),
                         tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-
         viewPager.addOnPageChangeListener(new
                 TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        // tab select listener is declared as below
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -83,19 +83,20 @@ public class MainActivity extends AppCompatActivity {
         });
         new Synchronizer(this).execute();
     }
-
+    // this is search button method
     public  void search_btn(View view){
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
-
+    // this is for menu button
     public Context getContext(){
         return this;
     }
+    // this is menu button method
     public void vert_btn(View v){
         popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_main, popupMenu.getMenu());
-
+        // on click listener
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem menu){
