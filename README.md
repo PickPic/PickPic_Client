@@ -72,3 +72,8 @@
   It also provides automatic completion when you search the image.
 
   The searched result will be shown in gridview.
+  
+# Bug report
+  
+  If you find a bug, please let me know by using "https://goo.gl/forms/pw44cIG09RCFkyQU2"
+
