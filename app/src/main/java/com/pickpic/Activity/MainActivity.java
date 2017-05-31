@@ -3,6 +3,7 @@ package com.pickpic.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v4.view.PagerAdapter;
@@ -82,8 +83,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = new Intent(MainActivity.this, ManualActivity.class);
-        startActivity(intent);
+        SharedPreferences sp = getSharedPreferences("setting",0);
+        SharedPreferences.Editor editor = sp.edit();
+
+        if(!sp.getBoolean("manual",false)){
+
+            editor.putBoolean("manual",true);
+            editor.commit();
+            Intent intent = new Intent(MainActivity.this, ManualActivity.class);
+            startActivity(intent);
+        }
+
         new Synchronizer(this).execute();
     }
     // this is search button method
