@@ -32,7 +32,7 @@ public class TagDBManager {
     // 생성자
     public TagDBManager(Context context) {
         this.context = context;
-        this.opener = new OpenHelper(context, "PickPic.db", null, 1);
+        this.opener = new OpenHelper(context, "PickPic_db.db", null, 1);
         db = opener.getWritableDatabase();
     }
 
