@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.pickpic.Activity.ServiceCenterActivity">
+    tools:context="com.pickpic.Activity.ServiceCenterActivity"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/ServiceCenterTextView1_1"

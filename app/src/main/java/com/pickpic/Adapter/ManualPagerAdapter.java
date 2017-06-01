@@ -5,49 +5,54 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.pickpic.R;
 
-import java.util.ArrayList;
 
 /**
  * Created by sekyo on 2017-05-30.
  */
 
 public class ManualPagerAdapter extends PagerAdapter {
-    private ArrayList<Integer> images;
-    private LayoutInflater inflater;
-    private Context context;
+    Button skipButton;
+    Context mContext;
+    LayoutInflater mLayoutInflater;
 
-    public ManualPagerAdapter(Context context, ArrayList<Integer> images) {
-        this.context = context;
-        this.images=images;
-        inflater = LayoutInflater.from(context);
-    }
+    private static final Integer[] mResources= {R.drawable.manual1, R.drawable.manual2, R.drawable.manual3, R.drawable.manual4, R.drawable.manual5, R.drawable.manual6, R.drawable.manual7, R.drawable.manual8};
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+    public ManualPagerAdapter(Context context, Button skipButton) {
+        mContext = context;
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.skipButton = skipButton;
     }
 
     @Override
     public int getCount() {
-        return images.size();
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup view, int position) {
-        View myImageLayout = inflater.inflate(R.layout.slider, view, false);
-        ImageView myImage = (ImageView) myImageLayout
-                .findViewById(R.id.image);
-        myImage.setImageResource(images.get(position));
-        view.addView(myImageLayout, 0);
-        return myImageLayout;
+        return mResources.length;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view.equals(object);
+        return view == ((LinearLayout) object);
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
+
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.pagerItemImageView);
+        imageView.setImageResource(mResources[position]);
+        container.addView(itemView);
+        if(position == mResources.length - 1)
+            skipButton.setText("OK");
+        return itemView;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((LinearLayout) object);
     }
 }

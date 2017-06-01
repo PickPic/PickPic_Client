@@ -6,28 +6,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.support.v4.view.PagerAdapter;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.*;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.pickpic.Adapter.TabAdapter;
-import com.pickpic.Backend.LocalImageManager;
 import com.pickpic.Backend.Synchronizer;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.R;
 
 // This is mainactivity : provide base skeleton. 
 public class MainActivity extends AppCompatActivity {
-    Toolbar toolbar;
-    TabLayout tabLayout;
     ViewPager viewPager;
     TabAdapter adapter;
     PopupMenu popupMenu;
@@ -95,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         new Synchronizer(this).execute();
+
     }
     // this is search button method
     public  void search_btn(View view){

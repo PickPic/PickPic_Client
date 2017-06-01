@@ -30,6 +30,7 @@ public class Synchronizer extends AsyncTask<Void, Void, Void> {
     }
 
     protected Void doInBackground(Void... voids) {
+
         TagDBManager tagDBManager = new TagDBManager(context);
         ArrayList<String> sync = tagDBManager.getAllTags();
         Log.v("sync before", "tag num : " + sync.size());

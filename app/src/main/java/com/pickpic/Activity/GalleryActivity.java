@@ -1,53 +1,27 @@
 package com.pickpic.Activity;
 
 import android.content.Intent;
-
 import android.net.Uri;
-
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
-
 import android.support.v4.app.FragmentManager;
-
 import android.support.v4.app.FragmentTransaction;
-
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.PopupMenu;
-
 import android.view.KeyEvent;
-
 import android.view.MenuItem;
-
 import android.view.View;
-
 import android.widget.ImageButton;
 
-import android.widget.Toast;
-
-
-
-import com.pickpic.Backend.TagDBManager;
-
-import com.pickpic.Fragment.ImageFragment;
-
 import com.pickpic.Fragment.GalleryTagFragment;
-
+import com.pickpic.Fragment.ImageFragment;
 import com.pickpic.R;
-
-
 
 import java.io.File;
 
-
 import static android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 
-
-
 public class GalleryActivity extends AppCompatActivity {
-
-
 
     int touch = 1;
 
