@@ -1,6 +1,10 @@
 # PickPic Client
+<p align="left">
+  <img src="https://github.com/PickPic/PickPic_Client/blob/develop/app/src/main/res/mipmap-xhdpi/icon.png" width="350"/>
+</p>
+
 	The Tag-based searchable gallery in android
-	
+
 # Introduce
 
   Today, smart phone memory is largely increased and there are many images on your gallery.
@@ -76,7 +80,7 @@
   
 # how to use
 
-## If you don't know us.
+## 1. If you don't know us.
 You need to run PickPic Server(https://github.com/PickPic/PickPic_Server).
 
 And you need to change some code in app/src/main/java/com/pickpic/Backend/AutoTagGenerator.java
@@ -85,7 +89,7 @@ You have to put your IP address on the 46th line of the file
 		
 	.load ("http: // * your ip adress *: 8080 / upload")
   
-## Or if you know us.
+## 2. Or if you know us.
 Then download this code, find PickPic.apk, install the PickPic.apk in your device and contact us.
 
 # Bug report
