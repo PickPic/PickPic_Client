@@ -79,18 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        SharedPreferences sp = getSharedPreferences("setting",0);
-        SharedPreferences.Editor editor = sp.edit();
-
-        if(!sp.getBoolean("manual",false)){
-
-            editor.putBoolean("manual",true);
-            editor.commit();
-            Intent intent = new Intent(MainActivity.this, ManualActivity.class);
-            startActivity(intent);
-        }
-
+        
         new Synchronizer(this).execute();
 
     }
