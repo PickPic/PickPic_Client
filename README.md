@@ -88,6 +88,8 @@ And you need to change some code in app/src/main/java/com/pickpic/Backend/AutoTa
 You have to put your IP address on the 46th line of the file
 		
 	.load ("http: // * your ip adress *: 8080 / upload")
+
+and then build the code, install the builded apk in your device.
   
 ## 2. Or if you know us.
 Then download this code, find PickPic.apk, install the PickPic.apk in your device and contact us.
