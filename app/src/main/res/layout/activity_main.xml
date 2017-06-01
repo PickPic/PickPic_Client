@@ -10,9 +10,9 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:background="@color/colorToolbar"
-        android:elevation="4dp">
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary"
+        android:elevation="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_alignParentTop="true"
                 android:gravity="center_vertical"
                 android:text="PickPic"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/white"
                 android:textSize="10pt"
                 android:textStyle="bold"
                 android:layout_toLeftOf="@+id/search_button"
@@ -36,21 +36,25 @@
             <ImageButton
                 android:id="@+id/search_button"
                 android:onClick="search_btn"
-                android:layout_width="50dp"
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
+                android:scaleType="fitCenter"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@mipmap/ic_search_black_24dp"
+                android:src="@drawable/ic_search_white_24dp"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/vert_button"
-                android:layout_toStartOf="@+id/vert_button" />
+                android:layout_toStartOf="@+id/vert_button"
+                android:layout_marginRight="10dp"/>
 
             <ImageButton
+                android:layout_marginRight="10dp"
                 android:id="@+id/vert_button"
                 android:onClick="vert_btn"
-                android:layout_width="50dp"
+                android:scaleType="fitCenter"
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@mipmap/ic_more_vert_black_24dp"
+                android:src="@drawable/ic_more_vert_white_24dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -62,11 +66,12 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         app:tabMode="fixed"
         app:tabGravity="fill"
-        android:background="@color/colorToolbar"
-        android:elevation="4dp"/>
+        app:tabIndicatorColor="@color/white"
+        android:background="@color/white"
+        android:elevation="1dp"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

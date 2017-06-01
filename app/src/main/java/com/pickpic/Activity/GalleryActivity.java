@@ -182,7 +182,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         menu = (ImageButton) findViewById(R.id.menuBtn);
 
-        change = (ImageButton) findViewById(R.id.changeBtn);
+        change = (ImageButton) findViewById(R.id.gallery_tag_btn);
 
         change.setOnClickListener(changeClickListener);
 
@@ -299,13 +299,9 @@ public class GalleryActivity extends AppCompatActivity {
         File file = new File(filepath);
 
         Uri mSaveImageUri = Uri.fromFile(file);
-
         Intent intent = new Intent(Intent.ACTION_SEND);
-
         intent.setType("image/jpg");
-
         intent.putExtra(Intent.EXTRA_STREAM, mSaveImageUri);
-
         startActivity(Intent.createChooser(intent, "Choose"));
 
     }

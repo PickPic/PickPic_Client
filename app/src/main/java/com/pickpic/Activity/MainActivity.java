@@ -40,14 +40,16 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         tabLayout.addTab(tabLayout.newTab().setIcon(
-                R.drawable.ic_folder_black_48dp));
+                R.drawable.ic_folder_white_24dp));
         tabLayout.addTab(tabLayout.newTab().setIcon(
-                R.drawable.ic_access_time_black_48dp));
+                R.drawable.ic_access_time_white_24dp));
         tabLayout.addTab(tabLayout.newTab().setIcon(
-                R.drawable.ic_local_offer_black_48dp));
-        tabLayout.getTabAt(0).getIcon().setColorFilter(Color.parseColor("#424242"), PorterDuff.Mode.SRC_IN);
+                R.drawable.ic_local_offer_white_24dp));
+
+
+        tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         for(int i = 1; i< tabLayout.getTabCount(); i++){
-            tabLayout.getTabAt(i).getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
+            tabLayout.getTabAt(i).getIcon().setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_IN);
         }
 
         viewPager =
@@ -63,12 +65,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                tab.getIcon().setColorFilter(Color.parseColor("#424242"), PorterDuff.Mode.SRC_IN);
+                tab.getIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
+                tab.getIcon().setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_IN);
             }
 
             @Override

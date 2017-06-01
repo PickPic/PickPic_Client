@@ -44,7 +44,7 @@ public class AutoTagGenerator {
         File f = new File(path);
         Ion.with(context)
                     .load("http://165.194.104.17:8080/upload") //server ip
-                    .setTimeout(1000 * 10)
+                    .setTimeout(1000 * 20)
                     .setMultipartFile(path, f.getName(), f)
                     .asString()
                     .setCallback(new FutureCallback<String>() {

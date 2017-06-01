@@ -16,6 +16,7 @@ public class Synchronizer extends AsyncTask<Void, Void, Void> {
     ProgressDialog progressDialog;
     Context context;
 
+
     public Synchronizer(Context context){
         this.context = context;
     }
@@ -23,7 +24,7 @@ public class Synchronizer extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute(){
         progressDialog = new ProgressDialog(context);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Synchronizing...");
+        progressDialog.setMessage("Synchronizing...\nIt may take a few minutes");
         progressDialog.setCancelable(false);
         progressDialog.show();
         super.onPreExecute();
