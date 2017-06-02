@@ -2,8 +2,9 @@ package com.pickpic.Activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,8 +17,8 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.pickpic.Adapter.SearchRecyclerViewAdapter;
 import com.pickpic.Adapter.GridViewAdaptor;
+import com.pickpic.Adapter.SearchRecyclerViewAdapter;
 import com.pickpic.Backend.LocalImageManager;
 import com.pickpic.Backend.TagDBManager;
 import com.pickpic.Item.GridViewItem;

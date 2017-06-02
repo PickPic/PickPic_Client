@@ -16,6 +16,7 @@ public class Synchronizer extends AsyncTask<Void, Void, Void> {
     ProgressDialog progressDialog;
     Context context;
 
+
     public Synchronizer(Context context){
         this.context = context;
     }
@@ -23,13 +24,14 @@ public class Synchronizer extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute(){
         progressDialog = new ProgressDialog(context);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Synchronizing...");
+        progressDialog.setMessage("Synchronizing...\nPlease wait a few minutes");
         progressDialog.setCancelable(false);
         progressDialog.show();
         super.onPreExecute();
     }
 
     protected Void doInBackground(Void... voids) {
+
         TagDBManager tagDBManager = new TagDBManager(context);
         ArrayList<String> sync = tagDBManager.getAllTags();
         Log.v("sync before", "tag num : " + sync.size());

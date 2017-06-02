@@ -89,7 +89,10 @@ public class GalleryTagListAdapter extends BaseAdapter {
                     }
                 });
 
-                tagdelete.show();
+                AlertDialog alertDialog =  tagdelete.show();
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.black));
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.black));
+
 
             }
         });

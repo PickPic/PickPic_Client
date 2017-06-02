@@ -1,53 +1,27 @@
 package com.pickpic.Activity;
 
 import android.content.Intent;
-
 import android.net.Uri;
-
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
-
 import android.support.v4.app.FragmentManager;
-
 import android.support.v4.app.FragmentTransaction;
-
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.PopupMenu;
-
 import android.view.KeyEvent;
-
 import android.view.MenuItem;
-
 import android.view.View;
-
 import android.widget.ImageButton;
 
-import android.widget.Toast;
-
-
-
-import com.pickpic.Backend.TagDBManager;
-
-import com.pickpic.Fragment.ImageFragment;
-
 import com.pickpic.Fragment.GalleryTagFragment;
-
+import com.pickpic.Fragment.ImageFragment;
 import com.pickpic.R;
-
-
 
 import java.io.File;
 
-
 import static android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 
-
-
 public class GalleryActivity extends AppCompatActivity {
-
-
 
     int touch = 1;
 
@@ -208,7 +182,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         menu = (ImageButton) findViewById(R.id.menuBtn);
 
-        change = (ImageButton) findViewById(R.id.changeBtn);
+        change = (ImageButton) findViewById(R.id.gallery_tag_btn);
 
         change.setOnClickListener(changeClickListener);
 
@@ -325,13 +299,9 @@ public class GalleryActivity extends AppCompatActivity {
         File file = new File(filepath);
 
         Uri mSaveImageUri = Uri.fromFile(file);
-
         Intent intent = new Intent(Intent.ACTION_SEND);
-
         intent.setType("image/jpg");
-
         intent.putExtra(Intent.EXTRA_STREAM, mSaveImageUri);
-
         startActivity(Intent.createChooser(intent, "Choose"));
 
     }

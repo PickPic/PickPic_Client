@@ -1,6 +1,8 @@
 package com.pickpic.Fragment;
 
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -82,16 +84,20 @@ public class GalleryTagFragment extends Fragment {
         AlertDialog.Builder taginput = new AlertDialog.Builder(getContext());
         taginput.setTitle("Add tag");
 
-        final EditText tag = new EditText(getContext());
-        taginput.setView(tag);
 
+
+        final EditText tag = new EditText(getContext());
+
+        taginput.setView(tag);
         taginput.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String temp = tag.getText().toString();
-                (new TagDBManager(getContext())).insertTag(imageFilePath, temp, TagDBManager.NORMAL_TAG);
-                galleryTagListItems.add(new GalleryTagListItem(temp));
-                galleryTagListAdapter.notifyDataSetChanged();
+                if(!temp.equals("")) {
+                    (new TagDBManager(getContext())).insertTag(imageFilePath, temp, TagDBManager.NORMAL_TAG);
+                    galleryTagListItems.add(new GalleryTagListItem(temp));
+                    galleryTagListAdapter.notifyDataSetChanged();
+                }
                 dialog.dismiss();
             }
         });
@@ -102,9 +108,9 @@ public class GalleryTagFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
-        taginput.show();
-
+        AlertDialog alertDialog =  taginput.show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.black));
     }
 
 }

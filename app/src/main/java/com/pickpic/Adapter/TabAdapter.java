@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.pickpic.Fragment.DirectoryTabFragment;
-import com.pickpic.Fragment.TimeTabFragment;
 import com.pickpic.Fragment.TagTabFragment;
+import com.pickpic.Fragment.TimeTabFragment;
 
 public class TabAdapter extends FragmentPagerAdapter {
 

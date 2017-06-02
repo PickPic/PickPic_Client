@@ -4,13 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true" />
-    <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/indicator"
+        android:id="@+id/manual_pager"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/manual_skip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SKIP"
+        android:textStyle="bold"
+        android:elevation="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"/>
 </RelativeLayout>

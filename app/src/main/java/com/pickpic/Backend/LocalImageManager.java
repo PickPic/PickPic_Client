@@ -5,15 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.Item.GridViewItem;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -43,7 +40,7 @@ public class LocalImageManager {
             int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
             bucketName = cursor.getString(columnIndex);
         }
-
+        cursor.close();
         return bucketName;
     }
     public static ArrayList<GridViewItem> getTimeTabGridViewItemList(Context context){
@@ -66,6 +63,7 @@ public class LocalImageManager {
                 gridViewItem.setThumbnail(cursor.getLong(columnIndex));
                 gridViewItems.add(gridViewItem);
             }
+            cursor.close();
         }
         return gridViewItems;
     }
@@ -86,6 +84,7 @@ public class LocalImageManager {
 
             date = formatter.format(new Date(Long.parseLong(date)));
         }
+        cursor.close();
         return date;
     }
 
@@ -155,6 +154,7 @@ public class LocalImageManager {
 
                 list.add(gridViewItem);
             }
+            cursor.close();
         }
         return list;
     }

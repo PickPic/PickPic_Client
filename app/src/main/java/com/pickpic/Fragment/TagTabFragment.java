@@ -3,17 +3,16 @@ package com.pickpic.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.pickpic.Activity.SearchActivity;
 import com.pickpic.Backend.TagDBManager;
-import com.pickpic.Item.DirectoryTabListViewItem;
 import com.pickpic.R;
 
 import java.util.ArrayList;
@@ -52,8 +51,12 @@ public class TagTabFragment extends Fragment {
     }
 
     public void setList() {
+
+        Log.v("fuck","set List");
         TagDBManager tagDBManager = new TagDBManager(getActivity());
         ArrayList<String> list = tagDBManager.getAllTags();
+        for(int i = 0;i < list.size();i++)
+            Log.v("fuck",list.get(i));
         listViewAdapter.addAll(list);
         listViewAdapter.notifyDataSetChanged();
     }
