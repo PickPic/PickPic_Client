@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+            <item
+                android:id="@+id/syncMenu"
+                android:title="Synchronize" />
+            <item
+                android:id="@+id/dropMenu"
+                android:title="Reset all tags"/>
+            <item
+                android:id="@+id/howToUseMenu"
+                android:title="How to use" />
+            <item
+                android:id="@+id/serviceCenterMenu"
+                android:title="Service center" />
+
+
+</menu>

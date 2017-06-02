@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.pickpic.Activity.ServiceCenterActivity"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/ServiceCenterTextView1_1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Front-End :"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12pt"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/ServiceCenterTextView1_2"
+        android:linksClickable="true"
+        android:autoLink="email"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="    Kang So-yeon : aaa0311@naver.com\n    Park Gun-hoo : gunhoo0216@naver.com\n    Lee Ye-won : yewon0505@naver.com"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="8pt"/>
+    <TextView
+        android:id="@+id/ServiceCenterTextView1_3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Back-End :"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12pt"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/ServiceCenterTextView1_4"
+        android:linksClickable="true"
+        android:autoLink="email"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="    Myung Se-kyo : sekyo95@naver.com\n    Lee Won-jun : vkdnjdldnjsw@naver.com"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="8pt" />
+    <TextView
+        android:id="@+id/ServiceCenterTextView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="\nIf you have any opinions about our app,\ncontact us to :"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="10pt" />
+    <TextView
+        android:id="@+id/ServiceCenterTextView3"
+        android:linksClickable="true"
+        android:autoLink="web"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="https://goo.gl/forms/pw44cIG09RCFkyQU2"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="8pt" />
+
+
+</android.support.v7.widget.LinearLayoutCompat>

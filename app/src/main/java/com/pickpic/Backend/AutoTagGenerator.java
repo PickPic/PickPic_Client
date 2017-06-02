@@ -13,53 +13,99 @@ import android.util.Log;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 /**
  * Created by 5p on 2017-05-03.
  */
 
+class WaitSlot {
+    public Context context;
+    public String path;
+    public WaitSlot(Context context, String path){
+        this.context = context;
+        this.path = path;
+    }
+}
+
 public class AutoTagGenerator {
-
-    public static void autoTagGenerate(final Context context, Uri uri){
-        String path = null;
-        try {
-            path = getFilePath(context, uri);
-        } catch(Exception e){
-
+    public static int limit = 2;
+    public static ArrayList<WaitSlot> que = new ArrayList<>();
+    public static void autoTagGenerate(final Context context, String path) {
+        if(AutoTagGenerator.limit <= 0){
+            que.add(new WaitSlot(context, path));
+            return;
         }
-        Log.v("SENDING_IMAGE", path);
+        AutoTagGenerator.limit--;
         File f = new File(path);
-
         Ion.with(context)
-                .load("POST","http://125.140.237.189:8080/upload") //server ip
-                .setMultipartFile(uri.toString(), f.getName(), f)
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String result) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(result);
-                            Log.v("Json",jsonObject.get("num").toString());
-                            Log.v("Json",jsonObject.get("tag").toString());
-                            Log.v("Json",jsonObject.get("probability").toString());
-                            TagDBManager tagDBManager = new TagDBManager(context);
-                            tagDBManager.insertImage(Uri.parse(jsonObject.get("uri").toString()));
-                            tagDBManager.insertTag(Uri.parse(jsonObject.get("uri").toString()),jsonObject.get("tag").toString(),0);
+                    .load("http://165.194.104.17:8080/upload") //server ip
+                    .setTimeout(1000 * 20)
+                    .setMultipartFile(path, f.getName(), f)
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            if(e != null){
+                                Log.e("ion-error", e.toString());
+                                AutoTagGenerator.limit++;
+                                if(que.size() > 0){
+                                    WaitSlot tmp = que.get(0);
+                                    que.remove(0);
+                                    AutoTagGenerator.autoTagGenerate(tmp.context, tmp.path);
+                                }
+                                return;
+                            }
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                int size = jsonObject.getInt("num");
+                                TagDBManager tagDBManager = new TagDBManager(context);
+                                for (int i = 0; i < size; i++) {
+                                    Log.v("Json", jsonObject.get("tag" + i).toString());
+                                    tagDBManager.insertTag(jsonObject.get("path").toString(), jsonObject.get("tag" + i).toString(), TagDBManager.NORMAL_TAG);
+                                }
+                                if(size > 0) {
+                                    tagDBManager.makeTrueTagGenerated(jsonObject.get("path").toString());
+                                }
+                                ArrayList<String> test = tagDBManager.getAllImages();
+                                Log.v("generater add image", "image num : " + test.size());
+                                test = tagDBManager.getAllTags();
+                                Log.v("generater add tag", "tag num : " + test.size());
+                                if(que.size() > 0){
+                                    WaitSlot tmp = que.get(0);
+                                    que.remove(0);
+                                    String path = tmp.path;
+                                    File f = new File(path);
+                                    Ion.with(tmp.context)
+                                            .load("http://165.194.104.17:8080/upload") //server ip
+                                            .setTimeout(1000 * 10)
+                                            .setMultipartFile(path, f.getName(), f)
+                                            .asString()
+                                            .setCallback(this);
+                                }
+                                else {
+                                    AutoTagGenerator.limit++;
+                                }
 
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
+                            } catch (Exception ex) {
+                                Log.v("exception", ex.toString());
+                                AutoTagGenerator.limit++;
+                                if(que.size() > 0){
+                                    WaitSlot tmp = que.get(0);
+                                    que.remove(0);
+                                    AutoTagGenerator.autoTagGenerate(tmp.context, tmp.path);
+                                }
+                            }
                         }
-                    }
 
-                });
+                    });
     }
 
-    static String getFilePath(Context context, Uri uri) throws URISyntaxException {
+    public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
         String selection = null;
         String[] selectionArgs = null;
         // Uri is different in versions after KITKAT (Android 4.4), we need to

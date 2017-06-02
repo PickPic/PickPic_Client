@@ -1,5 +1,7 @@
 package com.example.arseneholmes.pickpic;
 
+import com.pickpic.Backend.LocalImageManager;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
