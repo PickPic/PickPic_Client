@@ -40,7 +40,7 @@ public class LocalImageManager {
             int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
             bucketName = cursor.getString(columnIndex);
         }
-
+        cursor.close();
         return bucketName;
     }
     public static ArrayList<GridViewItem> getTimeTabGridViewItemList(Context context){
@@ -63,6 +63,7 @@ public class LocalImageManager {
                 gridViewItem.setThumbnail(cursor.getLong(columnIndex));
                 gridViewItems.add(gridViewItem);
             }
+            cursor.close();
         }
         return gridViewItems;
     }
@@ -83,6 +84,7 @@ public class LocalImageManager {
 
             date = formatter.format(new Date(Long.parseLong(date)));
         }
+        cursor.close();
         return date;
     }
 
@@ -152,6 +154,7 @@ public class LocalImageManager {
 
                 list.add(gridViewItem);
             }
+            cursor.close();
         }
         return list;
     }

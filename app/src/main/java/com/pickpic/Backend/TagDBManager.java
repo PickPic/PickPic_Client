@@ -90,18 +90,14 @@ public class TagDBManager {
 
     public ArrayList<String> getToBeErasedPaths(ArrayList<String> paths) {
         String concatenatedPath = "";
-        String sql = "SELECT path FROM IMAGES Where path NOT IN (";
-        for(int i = 0; i<paths.size(); i++){
-            if(i > 0){
-                concatenatedPath = concatenatedPath + ", ";
-            }
-            concatenatedPath = concatenatedPath + "\'" + paths.get(i) + "\'";
-        }
-        sql = sql + concatenatedPath + ");";
+        String sql = "SELECT path FROM IMAGES;";
+
         Cursor a = db.rawQuery(sql, null);
         ArrayList<String> results = new ArrayList<>();
         while(a.moveToNext()){
-            results.add(a.getString(0));
+            if(!paths.contains(a.getString(0))) {
+                results.add(a.getString(0));
+            }
         }
         a.close();
         return results;
