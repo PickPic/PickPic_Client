@@ -87,7 +87,7 @@ public class GalleryTagFragment extends Fragment {
 
 
         final EditText tag = new EditText(getContext());
-       
+
         taginput.setView(tag);
         taginput.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
