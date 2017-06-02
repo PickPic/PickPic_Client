@@ -1,6 +1,7 @@
 package com.pickpic.Fragment;
 
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -86,10 +87,7 @@ public class GalleryTagFragment extends Fragment {
 
 
         final EditText tag = new EditText(getContext());
-
-        tag.setTextColor(getResources().getColor(R.color.black));
-        tag.getBackground().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
-
+       
         taginput.setView(tag);
         taginput.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
